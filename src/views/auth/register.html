@@ -1,0 +1,68 @@
+<section class="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-white animate-in fade-in duration-500">
+
+    <div class="hidden lg:flex flex-col justify-between p-16 bg-[#F9FAFB] border-r border-gray-100">
+        <header class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-[#0D3BBD] rounded-lg flex items-center justify-center">
+                <i data-lucide="layout-grid" class="text-white w-5 h-5"></i>
+            </div>
+            <span class="text-xl font-bold text-[#111827]">Gantt</span>
+        </header>
+
+        <div class="max-w-xl">
+            <h1 class="text-5xl font-extrabold tracking-tighter leading-tight text-[#111827]">
+                Start managing <br> like a pro.
+            </h1>
+            <p class="text-lg text-gray-600 mt-6 leading-relaxed">
+                Join thousands of teams that use Gantt to organize their workflows and deliver results faster.
+            </p>
+        </div>
+
+        <footer class="text-sm text-gray-400 font-medium">© 2026 Gantt Project Management.</footer>
+    </div>
+
+    <div class="flex items-center justify-center p-6 sm:p-12 lg:p-20">
+        <div class="w-full max-w-[440px]">
+            <header class="mb-8 text-center lg:text-left">
+                <h2 class="text-3xl font-bold tracking-tight text-[#111827]">Create an account</h2>
+                <p class="text-sm text-gray-500 mt-2">Get started with your free workspace today.</p>
+            </header>
+
+            <button type="button" class="btn-outline mb-6">
+                <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5"
+                    alt="Google">
+                Sign up with Google
+            </button>
+
+            <form hx-get="/src/views/dashboard.html" hx-target="#app-container" class="space-y-4">
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2">Full
+                        Name</label>
+                    <input type="text" class="input-auth" placeholder="John Doe" required>
+                </div>
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2">Email
+                        Address</label>
+                    <input type="email" class="input-auth" placeholder="name@company.com" required>
+                </div>
+                <div>
+                    <label
+                        class="block text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2">Password</label>
+                    <input type="password" class="input-auth" placeholder="Create a password" required>
+                </div>
+                <button type="submit" class="btn-primary w-full mt-4">Create Account</button>
+            </form>
+
+            <footer class="mt-8 text-center border-t border-gray-100 pt-6 lg:text-left">
+                <p class="text-sm text-gray-500">
+                    Already have an account?
+                    <button hx-get="/src/views/auth/login.html" hx-target="#app-container"
+                        class="font-bold text-[#0D3BBD] hover:underline">
+                        Log in
+                    </button>
+                </p>
+            </footer>
+        </div>
+    </div>
+</section>
+
+<script>lucide.createIcons();</script>

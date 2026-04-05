@@ -49,8 +49,9 @@
     border-radius: var(--radius-xl);
     font-weight: 600;
     color: var(--text-main);
-    transition: background 0.2s;
+    transition: all 0.2s;
     cursor: pointer;
+    box-shadow: var(--shadow-sm);
 }
 
 .btn-outline:hover {

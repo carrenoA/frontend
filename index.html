@@ -19,20 +19,23 @@
     <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
-<body class="bg-[#F9FAFB] text-[#111827] antialiased">
+<body class="bg-[#F9FAFB]" x-data>
 
-    <div id="app-container" hx-get="/src/views/auth/login.html" hx-trigger="load" hx-target="this">
+    <div id="app-container" class="min-h-screen" x-init="
+            const path = window.location.pathname;
+            // Si la URL es el dashboard o proyectos, cargamos ese fragmento
+            if (path.includes('dashboard.html') || path.includes('projects')) {
+                htmx.ajax('GET', path, { target: '#app-container', pushUrl: false });
+            } else {
+                // Por defecto cargamos el login
+                htmx.ajax('GET', '/src/views/auth/login.html', { target: '#app-container', pushUrl: false });
+            }
+         ">
         <div class="flex items-center justify-center min-h-screen">
-            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#0D3BBD]"></div>
+            <div class="animate-spin rounded-full h-12 w-12 border-b-2 border-[#0D3BBD]"></div>
         </div>
     </div>
 
-    <script>
-        // Inicializar iconos de Lucide después de que HTMX cargue contenido
-        document.body.addEventListener('htmx:afterOnLoad', () => {
-            lucide.createIcons();
-        });
-    </script>
 </body>
 
 </html>

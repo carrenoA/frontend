@@ -1,0 +1,97 @@
+<div class="flex min-h-screen bg-[#F9FAFB] animate-in fade-in duration-500" x-data="{ filter: 'all' }">
+    <div hx-get="/src/partials/sidebar.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></div>
+
+    <main class="flex-1 p-8">
+        <header class="flex justify-between items-center mb-10">
+            <div>
+                <nav class="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">
+                    <button hx-get="/src/views/dashboard.html" hx-target="#app-container"
+                        class="hover:text-[#0D3BBD]">Dashboard</button>
+                    <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                    <span class="text-[#0D3BBD]">All Projects</span>
+                </nav>
+                <h1 class="text-3xl font-bold text-gray-900">Project Portfolio</h1>
+            </div>
+        </header>
+
+        <div class="flex gap-2 mb-8 bg-gray-100 p-1 rounded-xl w-fit">
+            <button @click="filter = 'all'"
+                :class="filter === 'all' ? 'bg-white shadow-sm text-[#0D3BBD]' : 'text-gray-500'"
+                class="px-6 py-2 rounded-lg text-sm font-bold transition-all">All</button>
+            <button @click="filter = 'progress'"
+                :class="filter === 'progress' ? 'bg-white shadow-sm text-[#0D3BBD]' : 'text-gray-500'"
+                class="px-6 py-2 rounded-lg text-sm font-bold transition-all">In Progress</button>
+            <button @click="filter = 'completed'"
+                :class="filter === 'completed' ? 'bg-white shadow-sm text-[#0D3BBD]' : 'text-gray-500'"
+                class="px-6 py-2 rounded-lg text-sm font-bold transition-all">Completed</button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+
+            <div x-show="filter === 'all' || filter === 'progress'" class="card p-6 border-t-4 border-blue-500">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-2 bg-blue-50 text-[#0D3BBD] rounded-lg"><i data-lucide="building-2"></i></div>
+                    <span class="text-[9px] font-black uppercase px-2 py-1 bg-blue-50 text-[#0D3BBD] rounded">In
+                        Progress</span>
+                </div>
+                <h3 class="font-bold text-lg text-gray-900">Metropolis Hub</h3>
+                <p class="text-xs text-gray-500 mt-2 mb-6 line-clamp-2">Estructura principal y planificación de
+                    interiores.</p>
+                <div class="flex justify-between text-[10px] font-bold uppercase mb-1">
+                    <span class="text-gray-400">84% Complete</span>
+                </div>
+                <div class="w-full bg-gray-100 h-1.5 rounded-full">
+                    <div class="bg-[#0D3BBD] h-full" style="width: 84%"></div>
+                </div>
+            </div>
+
+            <div x-show="filter === 'all' || filter === 'completed'" class="card p-6 border-t-4 border-green-500">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-2 bg-green-50 text-green-600 rounded-lg"><i data-lucide="check-circle"></i></div>
+                    <span
+                        class="text-[9px] font-black uppercase px-2 py-1 bg-green-50 text-green-600 rounded">Completed</span>
+                </div>
+                <h3 class="font-bold text-lg text-gray-900">Riverside Bridge</h3>
+                <p class="text-xs text-gray-500 mt-2 mb-6 line-clamp-2">Inspección final y entrega de obra civil.</p>
+                <div class="flex justify-between text-[10px] font-bold uppercase mb-1 text-green-600">
+                    <span>100% Complete</span>
+                </div>
+                <div class="w-full bg-green-100 h-1.5 rounded-full">
+                    <div class="bg-green-500 h-full" style="width: 100%"></div>
+                </div>
+            </div>
+
+            <div x-show="filter === 'all' || filter === 'progress'" class="card p-6 border-t-4 border-orange-500">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-2 bg-orange-50 text-orange-600 rounded-lg"><i data-lucide="wind"></i></div>
+                    <span class="text-[9px] font-black uppercase px-2 py-1 bg-orange-50 text-orange-600 rounded">In
+                        Progress</span>
+                </div>
+                <h3 class="font-bold text-lg text-gray-900">Evergreen Pavilion</h3>
+                <p class="text-xs text-gray-500 mt-2 mb-6 line-clamp-2">Fase de diseño sostenible y jardín comunitario.
+                </p>
+                <div class="flex justify-between text-[10px] font-bold uppercase mb-1">
+                    <span class="text-gray-400">32% Complete</span>
+                </div>
+                <div class="w-full bg-gray-100 h-1.5 rounded-full">
+                    <div class="bg-orange-500 h-full" style="width: 32%"></div>
+                </div>
+            </div>
+
+            <div x-show="filter === 'all' || filter === 'completed'" class="card p-6 border-t-4 border-green-500">
+                <div class="flex justify-between items-start mb-4">
+                    <div class="p-2 bg-green-50 text-green-600 rounded-lg"><i data-lucide="coffee"></i></div>
+                    <span
+                        class="text-[9px] font-black uppercase px-2 py-1 bg-green-50 text-green-600 rounded">Completed</span>
+                </div>
+                <h3 class="font-bold text-lg text-gray-900">Urban Cafe</h3>
+                <p class="text-xs text-gray-500 mt-2 mb-6">Remodelación completa de local comercial.</p>
+                <div class="w-full bg-green-100 h-1.5 rounded-full mt-4">
+                    <div class="bg-green-500 h-full" style="width: 100%"></div>
+                </div>
+            </div>
+
+        </div>
+    </main>
+</div>
+<script>lucide.createIcons();</script>
