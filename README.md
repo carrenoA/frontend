@@ -37,3 +37,18 @@ A powerful visual prototype for a project management tool (Gantt) built with a m
 2. **Open with Live Server**:
    - In VS Code, right-click `index.html` and select **"Open with Live Server"**.
    - Your browser will open the project (`http://127.0.0.1:5500`).
+
+## 📜 Git Guidelines (Conventional Commits)
+
+We follow the **Conventional Commits** specification for a clean and readable history.
+
+| Type | When to use it | Version Impact |
+| :--- | :--- | :--- |
+| **feat** | When adding a new feature to the code (MINOR version). | `MINOR` |
+| **fix** | When fixing an error or bug (PATCH version). | `PATCH` |
+| **docs** | Changes only in the documentation (README, comments). | `N/A` |
+| **style** | Changes that do not affect the meaning of the code (spacing, formatting, semi-colons). | `N/A` |
+| **refactor** | Code changes that neither fix a bug nor add a feature (logic improvement). | `N/A` |
+| **perf** | A code change that improves performance. | `PATCH` |
+| **test** | Adding missing tests or correcting existing ones. | `N/A` |
+| **chore** | Routine tasks that do not affect source code (updating dependencies, build configs). | `N/A` |
