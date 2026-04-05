@@ -1,0 +1,58 @@
+.btn-primary {
+    background-color: var(--brand-blue);
+    color: white;
+    width: 100%;
+    padding: 0.875rem 1.5rem;
+    border-radius: var(--radius-xl);
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s ease;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.card {
+    background: white;
+    border-radius: var(--radius-2xl);
+    padding: 1.5rem;
+    box-shadow: var(--shadow-card);
+    border: 1px solid rgba(0, 0, 0, 0.05);
+}
+
+.input-auth {
+    width: 100%;
+    padding: 0.75rem 1rem;
+    background-color: #F3F4F6;
+    border: 1px solid transparent;
+    border-radius: var(--radius-xl);
+    outline: none;
+    transition: all 0.2s ease;
+}
+
+.input-auth:focus {
+    background-color: white;
+    border-color: var(--brand-blue);
+    box-shadow: 0 0 0 4px rgba(13, 59, 189, 0.08);
+}
+
+.btn-outline {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.75rem 1rem;
+    background-color: white;
+    border: 1px solid #E5E7EB;
+    border-radius: var(--radius-xl);
+    font-weight: 600;
+    color: var(--text-main);
+    transition: background 0.2s;
+    cursor: pointer;
+}
+
+.btn-outline:hover {
+    background-color: #F9FAFB;
+}

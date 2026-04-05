@@ -1,0 +1,13 @@
+/* Import base and mobile first */
+@import url('base.css');
+@import url('mobile.css');
+
+/* Tablet */
+@media (min-width: 768px) {
+    @import url('tablet.css');
+}
+
+/* Desktop */
+@media (min-width: 1024px) {
+    @import url('desktop.css');
+}

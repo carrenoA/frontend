@@ -1,17 +1,38 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Frontend</title>
-    <script src="https://cdn.jsdelivr.net/npm/htmx.org@2.0.8/dist/htmx.min.js"
-        integrity="sha384-/TgkGk7p307TH7EXJDuUlgG3Ce1UVolAOFopFekQkkXihi5u/6OCvVKyz1W+idaz"
-        crossorigin="anonymous"></script>
+    <title>Velocity Systems | Management Hub</title>
+
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
+
+    <link rel="stylesheet" href="/static/css/style.css">
+
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <script src="/static/js/htmx.min.js" defer></script>
+    <script src="/static/js/main.js" defer></script>
+
+    <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
 </head>
 
-<body>
-    <h1>Test</h1>
+<body class="bg-[#F9FAFB] text-[#111827] antialiased">
+
+    <div id="app-container" hx-get="/src/views/auth/login.html" hx-trigger="load" hx-target="this">
+        <div class="flex items-center justify-center min-h-screen">
+            <div class="animate-spin rounded-full h-12 w-12 border-t-2 border-b-2 border-[#0D3BBD]"></div>
+        </div>
+    </div>
+
+    <script>
+        // Inicializar iconos de Lucide después de que HTMX cargue contenido
+        document.body.addEventListener('htmx:afterOnLoad', () => {
+            lucide.createIcons();
+        });
+    </script>
 </body>
 
 </html>

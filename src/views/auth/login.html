@@ -1,0 +1,99 @@
+<section class="min-h-screen grid grid-cols-1 lg:grid-cols-2 bg-white">
+
+    <div
+        class="hidden lg:flex flex-col justify-between p-16 bg-[#F9FAFB] border-r border-gray-100 animate-in slide-in-from-left duration-700">
+        <header class="flex items-center gap-2">
+            <div class="w-8 h-8 bg-[#0D3BBD] rounded-lg flex items-center justify-center">
+                <i data-lucide="layout-grid" class="text-white w-5 h-5"></i>
+            </div>
+            <span class="text-xl font-bold text-[#111827]">Gantt</span>
+        </header>
+
+        <div class="max-w-xl">
+            <h1 class="text-5xl font-extrabold tracking-tighter leading-tight text-[#111827]">
+                Streamline your projects, <br> elevate your business.
+            </h1>
+            <p class="text-lg text-gray-600 mt-6 leading-relaxed">
+                Unlock peak performance with Gantt, the ultimate Project Management and Business Suite for modern teams.
+            </p>
+        </div>
+
+        <footer class="text-sm text-gray-400 font-medium">
+            © 2026 Gantt Project Management. All rights reserved.
+        </footer>
+    </div>
+
+    <div class="flex items-center justify-center p-6 sm:p-12 lg:p-20">
+
+        <div class="w-full max-w-[440px] animate-in fade-in duration-500">
+
+            <div class="text-center mb-10 lg:hidden">
+                <div class="inline-flex items-center justify-center w-12 h-12 bg-[#EEF2FF] rounded-2xl mb-4">
+                    <i data-lucide="layout-grid" class="text-[#0D3BBD] w-6 h-6"></i>
+                </div>
+                <h1 class="text-2xl font-bold tracking-tight text-[#111827]">Gantt</h1>
+            </div>
+
+            <header class="mb-10 text-center lg:text-left">
+                <h2 class="text-3xl font-bold tracking-tight text-[#111827]">Login to your account</h2>
+                <p class="text-sm text-gray-500 mt-2">Welcome back! Please enter your details.</p>
+            </header>
+
+            <div class="mb-6">
+                <button type="button"
+                    class="w-full flex items-center justify-center gap-3 px-4 py-3 border border-gray-200 rounded-xl bg-white hover:bg-gray-50 transition-colors duration-200 text-sm font-semibold text-gray-700 shadow-sm">
+                    <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" class="w-5 h-5"
+                        alt="Google">
+                    Continue with Google
+                </button>
+            </div>
+
+            <div class="relative mb-6">
+                <div class="absolute inset-0 flex items-center">
+                    <div class="w-full border-t border-gray-100"></div>
+                </div>
+                <div class="relative flex justify-center text-xs uppercase">
+                    <span class="bg-white px-4 text-gray-400 font-bold tracking-widest">Or login with email</span>
+                </div>
+            </div>
+
+            <form hx-get="/src/views/dashboard.html" hx-target="#app-container" hx-push-url="true" class="space-y-5">
+
+                <div>
+                    <label class="block text-[11px] font-bold uppercase tracking-widest text-gray-400 mb-2">Email
+                        Address</label>
+                    <input type="email" class="input-auth" placeholder="name@company.com" required>
+                </div>
+
+                <div x-data="{ show: false }">
+                    <div class="flex justify-between mb-2">
+                        <label class="text-[11px] font-bold uppercase tracking-widest text-gray-400">Password</label>
+                        <a href="#" class="text-xs font-semibold text-[#0D3BBD] hover:underline">Forgot?</a>
+                    </div>
+                    <div class="relative">
+                        <input :type="show ? 'text' : 'password'" class="input-auth pr-10" placeholder="••••••••"
+                            required>
+                        <button type="button" @click="show = !show"
+                            class="absolute inset-y-0 right-0 pr-3 flex items-center text-gray-400">
+                            <i :data-lucide="show ? 'eye-off' : 'eye'" class="w-4 h-4"></i>
+                        </button>
+                    </div>
+                </div>
+
+                <button type="submit" class="btn-primary w-full mt-4">
+                    Sign In
+                </button>
+            </form>
+
+            <footer class="mt-10 text-center border-t border-gray-100 pt-8 lg:text-left">
+                <p class="text-sm text-gray-500">
+                    Don't have an account?
+                    <button hx-get="/src/views/auth/register.html" hx-target="#app-container"
+                        class="font-bold text-[#0D3BBD] hover:underline">
+                        Create one
+                    </button>
+                </p>
+            </footer>
+        </div>
+    </div>
+</section>
