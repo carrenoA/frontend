@@ -1,0 +1,86 @@
+<div class="flex min-h-screen bg-[#F9FAFB] animate-in fade-in duration-500">
+    <div hx-get="/src/partials/sidebar.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></div>
+
+    <main class="flex-1 p-8 overflow-y-auto">
+        <header class="flex justify-between items-center mb-10">
+            <div>
+                <h1 class="text-3xl font-bold text-gray-900">Clients</h1>
+            </div>
+            <div class="flex gap-4 items-center">
+                <button class="btn-primary !w-auto py-2 px-6 shadow-md shadow-blue-100 flex items-center gap-2">
+                    <i data-lucide="plus" class="w-4 h-4"></i> Create New Client
+                </button>
+            </div>
+        </header>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6 mb-10">
+            <div class="card p-6">
+                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Total Partners</p>
+                <div class="flex items-end justify-between">
+                    <h3 class="text-4xl font-black text-gray-900">42</h3>
+                    <span class="text-[11px] text-blue-500 font-bold mb-1">+12% this month</span>
+                </div>
+            </div>
+            <div class="card p-6">
+                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Average Retention</p>
+                <div class="flex items-end justify-between">
+                    <h3 class="text-4xl font-black text-gray-900">94%</h3>
+                    <i data-lucide="trending-up" class="text-orange-500 w-6 h-6 mb-1"></i>
+                </div>
+            </div>
+        </div>
+
+        <section class="card overflow-hidden mb-10" hx-get="/src/components/user-table.html" hx-trigger="load"
+            hx-swap="innerHTML">
+            <div class="p-12 flex justify-center">
+                <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-[#0D3BBD]"></div>
+            </div>
+        </section>
+
+        <h2 class="text-xl font-bold text-gray-900 mb-6">Key Client Insights</h2>
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 bg-[#0D3BBD] rounded-[2rem] p-8 text-white relative overflow-hidden group">
+                <div class="relative z-10">
+                    <span class="text-[10px] font-black uppercase tracking-widest opacity-60">VIP Client</span>
+                    <h3 class="text-3xl font-bold mt-4 mb-2">Vanguard Systems</h3>
+                    <p class="text-blue-100 text-sm max-w-md leading-relaxed mb-8">Major infrastructure project
+                        approaching Q4 milestone. Resources prioritized for 99.9% uptime delivery.</p>
+                    <button
+                        class="bg-white text-[#0D3BBD] px-8 py-3 rounded-xl font-bold text-sm hover:scale-105 transition-transform shadow-xl">Review
+                        Pipeline</button>
+                </div>
+                <div
+                    class="absolute -right-20 -bottom-20 w-64 h-64 bg-white/10 rounded-full blur-3xl group-hover:bg-white/20 transition-colors">
+                </div>
+            </div>
+
+            <div class="space-y-6">
+                <div class="card p-6 border-l-4 border-orange-500 flex gap-4">
+                    <div class="p-3 bg-orange-50 text-orange-500 rounded-xl h-fit"><i data-lucide="alert-triangle"
+                            class="w-5 h-5"></i></div>
+                    <div>
+                        <h4 class="font-bold text-gray-900">Expiring Contracts</h4>
+                        <p class="text-xs text-gray-400 font-medium mb-4">3 Renewals due this week</p>
+                    </div>
+                </div>
+                <div class="card p-6 border-l-4 border-blue-500 flex gap-4">
+                    <div class="p-3 bg-blue-50 text-[#0D3BBD] rounded-xl h-fit"><i data-lucide="message-circle"
+                            class="w-5 h-5"></i></div>
+                    <div>
+                        <h4 class="font-bold text-gray-900">Unread Feedback</h4>
+                        <div class="flex -space-x-1.5 mt-2">
+                            <div
+                                class="w-6 h-6 rounded-full bg-indigo-100 border border-white text-[8px] flex items-center justify-center font-bold">
+                                AS</div>
+                            <div
+                                class="w-6 h-6 rounded-full bg-blue-100 border border-white text-[8px] flex items-center justify-center font-bold">
+                                TM</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </main>
+</div>
+
+<script>lucide.createIcons();</script>

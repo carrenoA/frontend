@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Velocity Systems | Management Hub</title>
+    <title>ProjectFlow | Management Hub</title>
 
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap">
 
@@ -23,11 +23,9 @@
 
     <div id="app-container" class="min-h-screen" x-init="
             const path = window.location.pathname;
-            // Si la URL es el dashboard o proyectos, cargamos ese fragmento
             if (path.includes('dashboard.html') || path.includes('projects')) {
                 htmx.ajax('GET', path, { target: '#app-container', pushUrl: false });
             } else {
-                // Por defecto cargamos el login
                 htmx.ajax('GET', '/src/views/auth/login.html', { target: '#app-container', pushUrl: false });
             }
          ">

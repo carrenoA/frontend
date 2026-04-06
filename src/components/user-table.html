@@ -1,0 +1,171 @@
+<div x-data="{
+    search: '',
+    currentPage: 1,
+    itemsPerPage: 6,
+    clients: [
+        { id: 1, name: 'Vanguard Systems', domain: 'vanguard-hq.com', code: 'VS', projects: 12, status: 'ACTIVE', lastActivity: '2 hours ago', color: 'blue' },
+        { id: 2, name: 'Nexus Enterprises', domain: 'nexus-ent.io', code: 'NE', projects: 5, status: 'ON HOLD', lastActivity: 'Oct 24, 2023', color: 'orange' },
+        { id: 3, name: 'Lumina Partners', domain: 'lumina-law.com', code: 'LP', projects: 24, status: 'PROPOSAL', lastActivity: 'Yesterday', color: 'indigo' },
+        { id: 4, name: 'Aether Tech', domain: 'aether.design', code: 'AT', projects: 3, status: 'ACTIVE', lastActivity: '5 mins ago', color: 'teal' },
+        { id: 5, name: 'Stellar Corp', domain: 'stellar-corp.com', code: 'SC', projects: 8, status: 'ACTIVE', lastActivity: '1 day ago', color: 'purple' },
+        { id: 6, name: 'Horizon Logistics', domain: 'horizon-log.com', code: 'HL', projects: 15, status: 'ON HOLD', lastActivity: '3 days ago', color: 'amber' },
+        { id: 7, name: 'Nova Solutions', domain: 'nova-sol.io', code: 'NS', projects: 7, status: 'PROPOSAL', lastActivity: 'Today', color: 'pink' },
+        { id: 8, name: 'Apex Media', domain: 'apex-media.net', code: 'AM', projects: 10, status: 'ACTIVE', lastActivity: '1 hour ago', color: 'sky' },
+        { id: 9, name: 'Cloud Nine', domain: 'cloud9.tech', code: 'C9', projects: 22, status: 'ACTIVE', lastActivity: 'Now', color: 'blue' },
+        { id: 10, name: 'Digital Pulse', domain: 'dpulse.io', code: 'DP', projects: 4, status: 'ON HOLD', lastActivity: 'Oct 12, 2023', color: 'red' },
+        { id: 11, name: 'Green Growth', domain: 'greengrowth.org', code: 'GG', projects: 18, status: 'ACTIVE', lastActivity: 'Yesterday', color: 'green' },
+        { id: 12, name: 'Iron Forge', domain: 'ironforge.com', code: 'IF', projects: 9, status: 'PROPOSAL', lastActivity: '2 weeks ago', color: 'slate' },
+        { id: 13, name: 'Zenith Labs', domain: 'zenith-labs.com', code: 'ZL', projects: 31, status: 'ACTIVE', lastActivity: '3 hours ago', color: 'indigo' },
+        { id: 14, name: 'Velocity Soft', domain: 'velocity-soft.io', code: 'VS', projects: 6, status: 'ON HOLD', lastActivity: 'Yesterday', color: 'violet' },
+        { id: 15, name: 'Echo Dynamics', domain: 'echo-dyn.com', code: 'ED', projects: 14, status: 'ACTIVE', lastActivity: 'Today', color: 'emerald' },
+        { id: 16, name: 'Prime Estate', domain: 'prime-estate.net', code: 'PE', projects: 11, status: 'PROPOSAL', lastActivity: 'Nov 01, 2023', color: 'amber' },
+        { id: 17, name: 'Quantum Leap', domain: 'quantum-leap.tech', code: 'QL', projects: 20, status: 'ACTIVE', lastActivity: '12 hours ago', color: 'cyan' },
+        { id: 18, name: 'Legacy Group', domain: 'legacy-group.com', code: 'LG', projects: 2, status: 'ON HOLD', lastActivity: 'Jan 15, 2024', color: 'gray' },
+        { id: 19, name: 'Future Vision', domain: 'f-vision.io', code: 'FV', projects: 16, status: 'ACTIVE', lastActivity: 'Just now', color: 'blue' },
+        { id: 20, name: 'Urban Flow', domain: 'urban-flow.com', code: 'UF', projects: 13, status: 'PROPOSAL', lastActivity: 'Yesterday', color: 'orange' }
+    ],
+    get filteredClients() {
+        return this.clients.filter(c => 
+            c.name.toLowerCase().includes(this.search.toLowerCase()) || 
+            c.domain.toLowerCase().includes(this.search.toLowerCase())
+        );
+    },
+    get paginatedClients() {
+        const start = (this.currentPage - 1) * this.itemsPerPage;
+        const end = start + this.itemsPerPage;
+        return this.filteredClients.slice(start, end);
+    },
+    get totalPages() {
+        return Math.ceil(this.filteredClients.length / this.itemsPerPage);
+    }
+}" x-effect="$nextTick(() => { if(window.lucide) lucide.createIcons(); })"
+    x-init="$watch('currentPage', () => $nextTick(() => { if(window.lucide) lucide.createIcons(); })); $watch('search', () => $nextTick(() => { if(window.lucide) lucide.createIcons(); }))"
+    class="w-full">
+
+    <div class="mb-6 flex justify-between items-center px-6">
+        <h2 class="text-xl font-bold text-gray-900">Directory</h2>
+        <div class="relative">
+            <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"></i>
+            <input type="text" x-model="search" @input="currentPage = 1" placeholder="Filter records..."
+                class="pl-10 pr-4 py-2 bg-gray-100 border-none rounded-xl text-sm focus:ring-2 focus:ring-blue-100 w-64">
+        </div>
+    </div>
+
+    <div class="overflow-x-auto">
+        <table class="w-full text-left border-collapse table-fixed">
+            <thead>
+                <tr class="border-b border-gray-50 bg-gray-50/50">
+                    <th class="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest w-[30%]">Client
+                        Name</th>
+                    <th class="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest w-[12%]">Projects
+                    </th>
+                    <th
+                        class="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest w-[14%] text-nowrap">
+                        Active Team</th>
+                    <th class="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest w-[14%]">Status
+                    </th>
+                    <th class="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest w-[15%]">Last
+                        Activity</th>
+                    <th
+                        class="px-6 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center w-[15%]">
+                        Actions</th>
+                </tr>
+            </thead>
+            <tbody class="divide-y divide-gray-50">
+                <template x-for="client in paginatedClients" :key="client.id">
+                    <tr class="hover:bg-gray-50/50 transition-colors h-[81px]">
+                        <td class="px-6 py-2 overflow-hidden">
+                            <div class="flex items-center gap-3">
+                                <div :class="`w-10 h-10 rounded-lg bg-${client.color}-50 text-${client.color}-600 flex items-center justify-center font-bold text-xs shadow-sm flex-shrink-0`"
+                                    x-text="client.code"></div>
+                                <div class="overflow-hidden min-w-0">
+                                    <p class="font-bold text-gray-900 truncate" x-text="client.name"></p>
+                                    <p class="text-[10px] text-gray-400 truncate" x-text="client.domain"></p>
+                                </div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-2 text-sm text-gray-600 font-medium truncate"
+                            x-text="`${client.projects} total`"></td>
+                        <td class="px-6 py-2">
+                            <div class="flex -space-x-1.5 overflow-hidden">
+                                <div
+                                    class="w-6 h-6 rounded-full bg-gray-100 border border-white text-[8px] flex items-center justify-center font-bold flex-shrink-0">
+                                    JD</div>
+                                <div class="w-6 h-6 rounded-full bg-gray-100 border border-white text-[8px] flex items-center justify-center font-bold flex-shrink-0"
+                                    x-show="client.projects > 5">MK</div>
+                                <div class="w-6 h-6 rounded-full bg-blue-50 text-[#0D3BBD] border border-white text-[8px] flex items-center justify-center font-bold flex-shrink-0"
+                                    x-show="client.projects > 10" x-text="`+${client.projects - 2}`"></div>
+                            </div>
+                        </td>
+                        <td class="px-6 py-2 overflow-hidden">
+                            <template x-if="client.status === 'ACTIVE'">
+                                <span
+                                    class="px-3 py-1 bg-green-50 text-green-600 text-[9px] font-black uppercase rounded-full flex items-center gap-1.5 w-fit">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-green-600"></span> ACTIVE
+                                </span>
+                            </template>
+                            <template x-if="client.status === 'ON HOLD'">
+                                <span
+                                    class="px-3 py-1 bg-gray-100 text-gray-500 text-[9px] font-black uppercase rounded-full flex items-center gap-1.5 w-fit">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-gray-400"></span> ON HOLD
+                                </span>
+                            </template>
+                            <template x-if="client.status === 'PROPOSAL'">
+                                <span
+                                    class="px-3 py-1 bg-blue-50 text-[#0D3BBD] text-[9px] font-black uppercase rounded-full flex items-center gap-1.5 w-fit">
+                                    <span class="w-1.5 h-1.5 rounded-full bg-[#0D3BBD]"></span> PROPOSAL
+                                </span>
+                            </template>
+                        </td>
+                        <td class="px-6 py-2 text-xs text-gray-500 font-medium truncate" x-text="client.lastActivity">
+                        </td>
+                        <td class="px-6 py-2">
+                            <div class="flex justify-center items-center gap-1">
+                                <button
+                                    class="p-1.5 text-gray-400 hover:text-[#0D3BBD] transition-colors rounded-lg hover:bg-blue-50"
+                                    title="Ver"><i data-lucide="eye" class="w-4 h-4"></i></button>
+                                <button
+                                    class="p-1.5 text-gray-400 hover:text-gray-900 transition-colors rounded-lg hover:bg-gray-100"
+                                    title="Editar"><i data-lucide="pencil" class="w-4 h-4"></i></button>
+                                <button
+                                    class="p-1.5 text-gray-400 hover:text-red-500 transition-colors rounded-lg hover:bg-red-50"
+                                    title="Eliminar"><i data-lucide="trash-2" class="w-4 h-4"></i></button>
+                            </div>
+                        </td>
+                    </tr>
+                </template>
+
+                <template x-for="i in (itemsPerPage - paginatedClients.length)" :key="'empty-'+i">
+                    <tr class="h-[81px] border-b border-gray-50/50">
+                        <td colspan="6"></td>
+                    </tr>
+                </template>
+            </tbody>
+        </table>
+    </div>
+
+
+    <div class="px-6 py-4 border-t border-gray-50 flex justify-between items-center bg-gray-50/30">
+        <p class="text-xs text-gray-400 font-bold"
+            x-text="`Showing ${paginatedClients.length} of ${filteredClients.length} records`"></p>
+        <div class="flex gap-1">
+            <button @click="currentPage > 1 ? currentPage-- : null"
+                class="w-8 h-8 rounded-lg flex items-center justify-center border border-gray-200 text-gray-400 hover:bg-white transition-colors"
+                :disabled="currentPage === 1">
+                <i data-lucide="chevron-left" class="w-4 h-4"></i>
+            </button>
+
+            <template x-for="page in totalPages" :key="page">
+                <button @click="currentPage = page"
+                    :class="currentPage === page ? 'bg-[#0D3BBD] text-white shadow-lg shadow-blue-100' : 'text-gray-500 border border-gray-200 hover:bg-white'"
+                    class="w-8 h-8 rounded-lg font-bold text-xs shadow-sm transition-all" x-text="page"></button>
+            </template>
+
+            <button @click="currentPage < totalPages ? currentPage++ : null"
+                class="w-8 h-8 rounded-lg flex items-center justify-center border border-gray-200 text-gray-400 hover:bg-white transition-colors"
+                :disabled="currentPage === totalPages">
+                <i data-lucide="chevron-right" class="w-4 h-4"></i>
+            </button>
+        </div>
+    </div>
+</div>
