@@ -1,0 +1,233 @@
+<div class="flex min-h-screen bg-[#F9FAFB] animate-in fade-in duration-500" x-data="ganttLogic()" x-init="initGantt()">
+
+    <div hx-get="/src/partials/sidebar.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></div>
+
+    <main class="flex-1 flex flex-col h-screen overflow-hidden">
+        <header class="p-8 pb-4 flex justify-between items-center bg-white border-b border-gray-100">
+            <div class="flex items-center gap-4">
+                <button hx-get="/src/views/projects.html" hx-target="#app-container"
+                    class="p-2 hover:bg-gray-100 rounded-xl text-gray-400">
+                    <i data-lucide="chevron-left" class="w-5 h-5"></i>
+                </button>
+                <h1 class="text-xl font-black text-gray-900 tracking-tight">Project Workspace</h1>
+            </div>
+
+            <div class="flex items-center gap-4">
+                <div class="relative">
+                    <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"></i>
+                    <input type="text" placeholder="Search tasks..."
+                        class="pl-10 pr-4 py-2 bg-gray-100 border-none rounded-xl text-sm w-48 outline-none focus:ring-2 focus:ring-blue-100">
+                </div>
+                <button
+                    class="bg-[#0D3BBD] text-white px-6 py-2.5 rounded-xl text-[10px] font-black uppercase tracking-widest shadow-lg shadow-blue-100 hover:bg-blue-700 transition-all">
+                    Publish Changes
+                </button>
+            </div>
+        </header>
+
+        <div class="px-8 py-4 bg-white border-b border-gray-100 flex justify-between items-center">
+            <div class="flex items-center gap-6">
+                <!-- Avatars -->
+                <div class="flex -space-x-2">
+                    <div class="w-8 h-8 rounded-full bg-blue-500 border-2 border-white flex items-center justify-center text-[10px] font-bold text-white">SJ</div>
+                    <div class="w-8 h-8 rounded-full bg-indigo-500 border-2 border-white flex items-center justify-center text-[10px] font-bold text-white">MC</div>
+                    <div class="w-8 h-8 rounded-full bg-gray-200 border-2 border-white flex items-center justify-center text-[10px] font-bold text-gray-500">+4</div>
+                </div>
+
+                <!-- Restore View Toggle to Header -->
+                <div class="flex items-center gap-4">
+                    <div class="flex items-center gap-1 bg-gray-100 p-1 rounded-xl">
+                        <template x-for="mode in ['Day', 'Week', 'Month']">
+                            <button @click="changeView(mode)"
+                                :class="viewMode === mode ? 'bg-white shadow-sm text-[#0D3BBD]' : 'text-gray-400'"
+                                class="px-4 py-1.5 rounded-lg text-[10px] font-black uppercase tracking-wider transition-all"
+                                x-text="mode"></button>
+                        </template>
+                    </div>
+                </div>
+            </div>
+            <p class="text-[10px] font-black text-gray-400 uppercase tracking-widest">Timeline View: Q1 2026</p>
+        </div>
+
+        <div class="flex-1 bg-white overflow-hidden flex">
+            <!-- Left Pane: Task Hierarchy -->
+            <div class="w-[420px] border-r border-gray-100 flex flex-col overflow-y-auto overflow-x-hidden">
+                <!-- EXACT 85px Header to align with Frappe Gantt default header (45+30+10) -->
+                <div style="height: 85px;" class="grid grid-cols-[1fr,60px,60px] gap-4 px-4 pb-3 border-b border-gray-100 sticky top-0 bg-white z-10 text-[9.5px] font-black uppercase tracking-widest text-[#828b99] content-end">
+                    <div class="pl-2">Task Hierarchy</div>
+                    <div class="text-center">Owner</div>
+                    <div class="text-center">Status</div>
+                </div>
+                
+                <div class="flex flex-col">
+                    <template x-for="task in tasks" :key="task.id">
+                        <!-- EXACT 60px Rows to align with Frappe Gantt row height (bar_height 30 + padding 30) -->
+                        <div style="height: 60px; box-sizing: border-box;" class="w-full flex items-center hover:bg-gray-50 transition-colors border-b border-transparent box-border">
+                            <!-- Parent Row -->
+                            <template x-if="task.isParent">
+                                <div class="grid grid-cols-[1fr,60px,60px] gap-4 px-4 w-full items-center">
+                                    <div class="flex items-center gap-2">
+                                        <i data-lucide="chevron-down" class="w-4 h-4 text-blue-500"></i>
+                                        <span class="font-bold text-gray-800 text-[13px] truncate" x-text="task.name"></span>
+                                    </div>
+                                    <div></div>
+                                    <div class="text-center">
+                                        <span class="px-2 py-0.5 rounded-full text-[10px] font-bold bg-[#eef2ff] text-[#4f46e5]" x-text="task.progress + '%'"></span>
+                                    </div>
+                                </div>
+                            </template>
+                            <!-- Child Row -->
+                            <template x-if="!task.isParent">
+                                <div class="grid grid-cols-[1fr,60px,60px] gap-4 pl-10 pr-4 w-full items-center">
+                                    <div class="flex items-center gap-2">
+                                        <span class="font-medium text-[#4b5563] text-[13px] truncate" x-text="task.name"></span>
+                                    </div>
+                                    <div class="flex justify-center">
+                                        <img :src="task.avatar" class="w-6 h-6 rounded-full border-2 border-white shadow-[0_2px_4px_rgba(0,0,0,0.05)] object-cover" alt="Owner">
+                                    </div>
+                                    <div class="flex justify-center">
+                                        <div class="w-[7px] h-[7px] rounded-full" :class="task.colorClass"></div>
+                                    </div>
+                                </div>
+                            </template>
+                        </div>
+                    </template>
+                </div>
+            </div>
+
+            <!-- Right Pane: Gantt -->
+            <div id="gantt-target" class="flex-1 overflow-auto bg-white flex flex-col relative w-full"></div>
+        </div>
+    </main>
+</div>
+
+<style>
+    /* User specifically requested Parent Activities have text INSIDE the bar, and Tasks have text to the RIGHT.
+       Frappe recalculates SVG element position, but we can override standard visual text positioning using CSS transform where required, or let Frappe handle it.
+       If parent text should always be inside and child text should always be right, we force it. */
+       
+    .gantt .bar-wrapper.parent-bar .bar-label {
+        /* Force alignment inside or let Frappe do it? Frappe defaults to inside if it fits. */
+        fill: white !important;
+        font-weight: bold;
+    }
+
+    .gantt .bar-wrapper.child-bar .bar-label {
+        /* If frappe puts it inside, we can push it outside via CSS transform, but Frappe's labels use absolute x SVG attributes.
+           To safely ensure labels are generally to the right, we override the Frappe class fill. */
+        fill: #374151 !important; 
+        font-weight: bold;
+    }
+</style>
+
+<script>
+    function ganttLogic() {
+        return {
+            viewMode: 'Week',
+            gantt: null,
+            tasks: [
+                { id: 'P1', name: 'Concept Phase', start: '2026-09-15', end: '2026-09-25', progress: 50, isParent: true, dependencies: '', custom_class: 'parent-bar' },
+                { id: 'T1', name: 'Market Analysis', start: '2026-09-15', end: '2026-09-18', progress: 100, avatar: 'https://i.pravatar.cc/150?u=1', colorClass: 'bg-green-500', isParent: false, dependencies: 'P1', custom_class: 'child-bar' },
+                { id: 'T2', name: 'User Interviews', start: '2026-09-19', end: '2026-09-25', progress: 0, avatar: 'https://i.pravatar.cc/150?u=2', colorClass: 'bg-blue-500', isParent: false, dependencies: 'P1, T1', custom_class: 'child-bar' },
+                
+                { id: 'P2', name: 'Design System', start: '2026-09-25', end: '2026-10-02', progress: 24, isParent: true, dependencies: '', custom_class: 'parent-bar' },
+                { id: 'T3', name: 'Fluid Component Library', start: '2026-09-25', end: '2026-09-29', progress: 50, avatar: 'https://i.pravatar.cc/150?u=3', colorClass: 'bg-[#984a1e]', isParent: false, dependencies: 'P2', custom_class: 'child-bar' },
+                { id: 'T4', name: 'Iconography Set', start: '2026-09-30', end: '2026-10-02', progress: 0, avatar: 'https://i.pravatar.cc/150?u=4', colorClass: 'bg-gray-400', isParent: false, dependencies: 'P2, T3', custom_class: 'child-bar' },
+                
+                { id: 'P3', name: 'Backend Architecture', start: '2026-10-05', end: '2026-10-15', progress: 0, isParent: true, dependencies: '', custom_class: 'parent-bar' },
+                
+                { id: 'P4', name: 'Frontend Development', start: '2026-10-10', end: '2026-10-25', progress: 0, isParent: true, dependencies: '', custom_class: 'parent-bar' },
+                { id: 'T5', name: 'UI Implementation', start: '2026-10-10', end: '2026-10-15', progress: 0, avatar: 'https://i.pravatar.cc/150?u=5', colorClass: 'bg-green-500', isParent: false, dependencies: 'P4', custom_class: 'child-bar' },
+                { id: 'T6', name: 'State Management', start: '2026-10-16', end: '2026-10-20', progress: 0, avatar: 'https://i.pravatar.cc/150?u=1', colorClass: 'bg-indigo-500', isParent: false, dependencies: 'P4, T5', custom_class: 'child-bar' },
+                { id: 'T7', name: 'API Integration', start: '2026-10-21', end: '2026-10-25', progress: 0, avatar: 'https://i.pravatar.cc/150?u=2', colorClass: 'bg-purple-500', isParent: false, dependencies: 'P4, T6', custom_class: 'child-bar' },
+                
+                { id: 'P5', name: 'Quality Assurance', start: '2026-10-26', end: '2026-11-05', progress: 0, isParent: true, dependencies: '', custom_class: 'parent-bar' },
+                { id: 'T8', name: 'Unit Testing', start: '2026-10-26', end: '2026-10-31', progress: 0, avatar: 'https://i.pravatar.cc/150?u=3', colorClass: 'bg-red-500', isParent: false, dependencies: 'P5', custom_class: 'child-bar' },
+                { id: 'T9', name: 'E2E Testing', start: '2026-11-01', end: '2026-11-05', progress: 0, avatar: 'https://i.pravatar.cc/150?u=4', colorClass: 'bg-yellow-500', isParent: false, dependencies: 'P5, T8', custom_class: 'child-bar' }
+            ],
+            initGantt() {
+                this.$nextTick(() => {
+
+                    const ganttTasks = this.tasks.map(t => ({
+                        id: t.id,
+                        name: t.name,
+                        start: t.start,
+                        end: t.end,
+                        progress: t.progress,
+                        dependencies: t.dependencies,
+                        custom_class: t.custom_class
+                    }));
+
+                    if (typeof Gantt !== 'undefined') {
+                        this.gantt = new Gantt("#gantt-target", ganttTasks, {
+                            view_mode: this.viewMode,
+                            language: 'en',
+                            bar_height: 30, 
+                            padding: 30, // Ensures row is exactly 60px tall
+                            custom_popup_html: (task) => {
+                                return `<div class="p-2 bg-white rounded-lg shadow-xl border border-gray-100 min-w-[120px] z-[9999]">
+                                            <p class="font-bold text-xs text-gray-900 mb-1">${task.name}</p>
+                                            <p class="text-[10px] text-blue-600 font-black">${task.progress}% complete</p>
+                                        </div>`;
+                            }
+                        });
+
+                        // Setup Drag to Pan (Click & Drag Navigation)
+                        this.setupDragToPan();
+
+                    } else {
+                        console.error('Gantt library not loaded');
+                    }
+                    lucide.createIcons();
+                });
+            },
+            changeView(mode) {
+                this.viewMode = mode;
+                if (this.gantt) {
+                    this.gantt.change_view_mode(mode);
+                    // Re-apply drag events after Frappe rebuilds the DOM for the new view
+                    setTimeout(() => this.setupDragToPan(), 100);
+                }
+            },
+            setupDragToPan() {
+                const container = document.querySelector('.gantt-container');
+                if (!container) return;
+
+                let isDown = false;
+                let startX;
+                let scrollLeft;
+
+                // Make the empty SVG space look draggable
+                container.style.cursor = 'grab';
+
+                container.addEventListener('mousedown', (e) => {
+                    // Si el clic es sobre una barra o texto, ignoramos para permitir arrastrar tareas nativamente
+                    if (e.target.closest('.bar-wrapper') || e.target.closest('.handle-group')) return;
+                    
+                    isDown = true;
+                    container.style.cursor = 'grabbing';
+                    startX = e.pageX - container.offsetLeft;
+                    scrollLeft = container.scrollLeft;
+                });
+
+                container.addEventListener('mouseleave', () => {
+                    isDown = false;
+                    container.style.cursor = 'grab';
+                });
+
+                container.addEventListener('mouseup', () => {
+                    isDown = false;
+                    container.style.cursor = 'grab';
+                });
+
+                container.addEventListener('mousemove', (e) => {
+                    if (!isDown) return;
+                    e.preventDefault();
+                    const x = e.pageX - container.offsetLeft;
+                    const walk = (x - startX) * 1.5; // Multiplier for faster pan
+                    container.scrollLeft = scrollLeft - walk;
+                });
+            }
+        }
+    }
+</script>
