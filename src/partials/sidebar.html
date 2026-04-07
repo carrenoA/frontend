@@ -2,15 +2,14 @@
     x-data="{ currentPath: window.location.pathname }"
     @htmx:after-swap.window="currentPath = event.detail.pathInfo.requestPath">
     <div class="p-8">
-        <h2 class="text-[#0D3BBD] font-black text-xl tracking-tight">The Fluid Architect</h2>
+        <h2 class="text-[#0D3BBD] font-black text-xl tracking-tight">Gantt</h2>
     </div>
 
     <nav class="flex-1 px-4 space-y-1">
         <a hx-get="/src/views/dashboard.html" hx-target="#app-container" hx-push-url="true"
             @click="currentPath = '/src/views/dashboard.html'"
             class="flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 group hover:bg-gray-50 text-gray-400 hover:text-gray-900"
-            :class="{ 'active-nav-link': currentPath.includes('dashboard.html') }"
-            id="nav-dashboard">
+            :class="{ 'active-nav-link': currentPath.includes('dashboard.html') }" id="nav-dashboard">
             <i data-lucide="layout-dashboard" class="w-5 h-5"></i>
             <span class="text-sm font-bold">Dashboard</span>
         </a>
@@ -18,8 +17,7 @@
         <a hx-get="/src/views/clients/list.html" hx-target="#app-container" hx-push-url="true"
             @click="currentPath = '/src/views/clients/list.html'"
             class="flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 group hover:bg-gray-50 text-gray-400 hover:text-gray-900"
-            :class="{ 'active-nav-link': currentPath.includes('clients/list.html') }"
-            id="nav-clients">
+            :class="{ 'active-nav-link': currentPath.includes('clients/list.html') }" id="nav-clients">
             <i data-lucide="users" class="w-5 h-5"></i>
             <span class="text-sm font-bold">Clients</span>
         </a>
@@ -27,8 +25,7 @@
         <a hx-get="/src/views/projects/all.html" hx-target="#app-container" hx-push-url="true"
             @click="currentPath = '/src/views/projects/all.html'"
             class="flex items-center gap-3 px-4 py-3 rounded-xl cursor-pointer transition-all duration-200 group hover:bg-gray-50 text-gray-400 hover:text-gray-900"
-            :class="{ 'active-nav-link': currentPath.includes('projects') }"
-            id="nav-projects">
+            :class="{ 'active-nav-link': currentPath.includes('projects') }" id="nav-projects">
             <i data-lucide="folder-kanban" class="w-5 h-5"></i>
             <span class="text-sm font-bold">Projects</span>
         </a>
@@ -48,7 +45,8 @@
 
     <div class="p-4 border-t border-gray-50">
         <div class="flex items-center gap-3 p-2 rounded-xl bg-gray-50 border border-gray-100">
-            <div class="w-10 h-10 rounded-full bg-[#0D3BBD] text-white flex items-center justify-center font-black text-sm shadow-sm">
+            <div
+                class="w-10 h-10 rounded-full bg-[#0D3BBD] text-white flex items-center justify-center font-black text-sm shadow-sm">
                 AD
             </div>
             <div>
