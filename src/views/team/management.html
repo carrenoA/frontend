@@ -1,0 +1,261 @@
+<div class="flex min-h-screen bg-[#F9FAFB] animate-in fade-in duration-500">
+    <div hx-get="/src/partials/sidebar.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></div>
+
+    <main class="flex-1 p-8" x-data="{
+        search: '',
+        currentPage: 1,
+        itemsPerPage: 6,
+        team: [
+            { id: 1, name: 'Sarah Jenkins', email: 'sarah.j@fluid.arch', role: 'Senior Architect', projects: ['PZ', 'PA'], tasksDone: 12, tasksTotal: 16, status: 'AVAILABLE', avatar: 'SJ', color: 'blue' },
+            { id: 2, name: 'Marcus Chen', email: 'm.chen@fluid.arch', role: 'UI Strategist', projects: ['CU'], tasksDone: 4, tasksTotal: 10, status: 'DEEP WORK', avatar: 'MC', color: 'indigo' },
+            { id: 3, name: 'Elena Rodriguez', email: 'elena.r@fluid.arch', role: 'Lead Developer', projects: ['CE', 'AL'], tasksDone: 19, tasksTotal: 20, status: 'AT CAPACITY', avatar: 'ER', color: 'purple' },
+            { id: 4, name: 'David Wilson', email: 'd.wilson@fluid.arch', role: 'Product Owner', projects: ['RM'], tasksDone: 2, tasksTotal: 12, status: 'AVAILABLE', avatar: 'DW', color: 'teal' },
+            { id: 5, name: 'Karen Lewis', email: 'k.lewis@fluid.arch', role: 'UX Designer', projects: ['VY'], tasksDone: 8, tasksTotal: 10, status: 'AVAILABLE', avatar: 'KL', color: 'pink' },
+            { id: 6, name: 'James Bond', email: 'j.bond@fluid.arch', role: 'Security Ops', projects: ['MI6'], tasksDone: 5, tasksTotal: 5, status: 'DEEP WORK', avatar: 'JB', color: 'slate' },
+            { id: 7, name: 'Ana Loftus', email: 'ana.l@fluid.arch', role: 'BIM Manager', projects: ['HS'], tasksDone: 15, tasksTotal: 25, status: 'AVAILABLE', avatar: 'AL', color: 'orange' },
+            { id: 8, name: 'Robert Fox', email: 'r.fox@fluid.arch', role: 'Structural Eng.', projects: ['BR', 'TH'], tasksDone: 3, tasksTotal: 10, status: 'AT CAPACITY', avatar: 'RF', color: 'amber' },
+            { id: 9, name: 'Linda Zhang', email: 'l.zhang@fluid.arch', role: 'Interior Designer', projects: ['AP'], tasksDone: 12, tasksTotal: 12, status: 'AVAILABLE', avatar: 'LZ', color: 'rose' },
+            { id: 10, name: 'Tom Hardy', email: 't.hardy@fluid.arch', role: 'Site Supervisor', projects: ['MT'], tasksDone: 7, tasksTotal: 14, status: 'DEEP WORK', avatar: 'TH', color: 'emerald' },
+            { id: 11, name: 'Sophie V.', email: 's.v@fluid.arch', role: 'Junior Architect', projects: ['PZ'], tasksDone: 5, tasksTotal: 12, status: 'AVAILABLE', avatar: 'SV', color: 'violet' },
+            { id: 12, name: 'Carlos Ruiz', email: 'c.ruiz@fluid.arch', role: 'Fullstack Dev', projects: ['K2', 'MA'], tasksDone: 18, tasksTotal: 20, status: 'AVAILABLE', avatar: 'CR', color: 'sky' },
+            { id: 13, name: 'Emily Blunt', email: 'e.blunt@fluid.arch', role: 'HR Manager', projects: ['INT'], tasksDone: 10, tasksTotal: 10, status: 'AVAILABLE', avatar: 'EB', color: 'red' },
+            { id: 14, name: 'Oliver Twist', email: 'o.twist@fluid.arch', role: 'Draftsman', projects: ['PA'], tasksDone: 2, tasksTotal: 8, status: 'ON HOLD', avatar: 'OT', color: 'stone' },
+            { id: 15, name: 'Nina Simone', email: 'n.simone@fluid.arch', role: 'Acoustics Eng.', projects: ['CH'], tasksDone: 9, tasksTotal: 11, status: 'DEEP WORK', avatar: 'NS', color: 'cyan' },
+            { id: 16, name: 'Bruce Wayne', email: 'b.wayne@fluid.arch', role: 'Investor', projects: ['WG'], tasksDone: 1, tasksTotal: 1, status: 'AVAILABLE', avatar: 'BW', color: 'zinc' },
+            { id: 17, name: 'Diana Prince', email: 'd.prince@fluid.arch', role: 'Legal Counsel', projects: ['WW'], tasksDone: 14, tasksTotal: 15, status: 'AT CAPACITY', avatar: 'DP', color: 'blue' },
+            { id: 18, name: 'Peter Parker', email: 'p.parker@fluid.arch', role: 'Photographer', projects: ['DB'], tasksDone: 20, tasksTotal: 30, status: 'AVAILABLE', avatar: 'PP', color: 'red' },
+            { id: 19, name: 'Wanda M.', email: 'w.maximoff@fluid.arch', role: 'Creative Dir.', projects: ['WV'], tasksDone: 6, tasksTotal: 6, status: 'DEEP WORK', avatar: 'WM', color: 'fuchsia' },
+            { id: 20, name: 'Tony Stark', email: 't.stark@fluid.arch', role: 'Lead Engineer', projects: ['IM'], tasksDone: 45, tasksTotal: 50, status: 'AT CAPACITY', avatar: 'TS', color: 'yellow' }
+        ],
+        get filteredTeam() {
+            return this.team.filter(m => 
+                m.name.toLowerCase().includes(this.search.toLowerCase()) || 
+                m.role.toLowerCase().includes(this.search.toLowerCase())
+            );
+        },
+        get paginatedTeam() {
+            const start = (this.currentPage - 1) * this.itemsPerPage;
+            const end = start + this.itemsPerPage;
+            return this.filteredTeam.slice(start, end);
+        },
+        get totalPages() {
+            return Math.ceil(this.filteredTeam.length / this.itemsPerPage);
+        }
+    }" x-effect="$nextTick(() => { if(window.lucide) lucide.createIcons(); })"
+        x-init="$watch('currentPage', () => $nextTick(() => { if(window.lucide) lucide.createIcons(); })); $watch('search', () => $nextTick(() => { if(window.lucide) lucide.createIcons(); }))">
+
+        <header class="flex justify-between items-center mb-10">
+            <div>
+                <!-- <nav class="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">
+                    <button hx-get="/src/views/dashboard.html" hx-target="#app-container"
+                        class="hover:text-[#0D3BBD]">Dashboard</button>
+                    <i data-lucide="chevron-right" class="w-3 h-3"></i>
+                    <span class="text-[#0D3BBD]">Team Management</span>
+                </nav> -->
+                <h1 class="text-3xl font-black text-gray-900 tracking-tight">Team Management</h1>
+            </div>
+        </header>
+
+        <section class="grid grid-cols-1 md:grid-cols-4 gap-6 mb-10">
+            <div class="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm">
+                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Total Members</p>
+                <div class="flex items-end justify-between">
+                    <h3 class="text-4xl font-black text-gray-900 leading-none" x-text="team.length"></h3>
+                    <span class="text-[11px] text-blue-500 font-bold mb-1">+2 this month</span>
+                </div>
+            </div>
+            <div class="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm border-l-4 border-l-[#0D3BBD]">
+                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Active Projects</p>
+                <h3 class="text-4xl font-black text-gray-900 leading-none">4</h3>
+            </div>
+            <div class="bg-white p-6 rounded-[2rem] border border-gray-100 shadow-sm">
+                <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Avg. Availability</p>
+                <h3 class="text-4xl font-black text-gray-900 leading-none">84%</h3>
+            </div>
+            <div
+                class="border-2 border-dashed border-gray-200 rounded-[2rem] flex items-center justify-center p-6 cursor-pointer hover:border-[#0D3BBD] hover:bg-blue-50/30 transition-all group">
+                <div class="text-center">
+                    <i data-lucide="user-plus"
+                        class="w-8 h-8 mx-auto mb-2 text-gray-300 group-hover:text-[#0D3BBD]"></i>
+                    <p class="text-sm font-bold text-gray-400 group-hover:text-[#0D3BBD]">Invite Member</p>
+                </div>
+            </div>
+        </section>
+
+        <div class="bg-white rounded-[2rem] border border-gray-100 shadow-sm overflow-hidden mb-10">
+            <div class="p-8 flex justify-between items-center border-b border-gray-50">
+                <h2 class="text-xl font-black text-gray-900">Directory</h2>
+                <div class="relative">
+                    <i data-lucide="search" class="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-gray-400"></i>
+                    <input type="text" x-model="search" @input="currentPage = 1" placeholder="Search members..."
+                        class="pl-10 pr-4 py-2 bg-gray-100 border-none rounded-xl text-sm focus:ring-2 focus:ring-blue-100 w-64 outline-none">
+                </div>
+            </div>
+
+            <div class="overflow-x-auto">
+                <table class="w-full text-left table-fixed">
+                    <thead>
+                        <tr class="bg-gray-50/50">
+                            <th class="px-8 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest w-[25%]">
+                                Member</th>
+                            <th class="px-8 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest w-[18%]">
+                                Role</th>
+                            <th class="px-8 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest w-[15%]">
+                                Projects</th>
+                            <th class="px-8 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest w-[15%]">
+                                Tasks</th>
+                            <th class="px-8 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest w-[15%]">
+                                Status</th>
+                            <th
+                                class="px-8 py-4 text-[10px] font-bold text-gray-400 uppercase tracking-widest text-center w-[12%]">
+                                Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody class="divide-y divide-gray-50">
+                        <template x-for="member in paginatedTeam" :key="member.id">
+                            <tr class="hover:bg-gray-50/30 transition-colors h-[84px]">
+                                <td class="px-8 py-2">
+                                    <div class="flex items-center gap-3">
+                                        <div :class="`w-10 h-10 rounded-full bg-${member.color}-50 text-${member.color}-600 flex items-center justify-center font-black text-xs border border-${member.color}-100`"
+                                            x-text="member.avatar"></div>
+                                        <div class="truncate">
+                                            <p class="font-bold text-gray-900" x-text="member.name"></p>
+                                            <p class="text-[10px] text-gray-400 font-medium" x-text="member.email"></p>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-8 py-2 text-sm text-gray-600 font-semibold" x-text="member.role"></td>
+                                <td class="px-8 py-2">
+                                    <div class="flex gap-1">
+                                        <template x-for="p in member.projects">
+                                            <span
+                                                class="px-2 py-0.5 bg-blue-50 text-blue-600 text-[9px] font-black rounded uppercase"
+                                                x-text="p"></span>
+                                        </template>
+                                    </div>
+                                </td>
+                                <td class="px-8 py-2">
+                                    <div class="w-24">
+                                        <div class="flex justify-between text-[9px] font-black mb-1">
+                                            <span class="text-gray-900"
+                                                x-text="`${member.tasksDone}/${member.tasksTotal}`"></span>
+                                        </div>
+                                        <div class="w-full bg-gray-100 h-1 rounded-full overflow-hidden">
+                                            <div class="bg-[#0D3BBD] h-full transition-all duration-700"
+                                                :style="`width: ${(member.tasksDone / member.tasksTotal) * 100}%`">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </td>
+                                <td class="px-8 py-2">
+                                    <span :class="{
+                                        'bg-green-50 text-green-600 border-green-100': member.status === 'AVAILABLE',
+                                        'bg-blue-50 text-blue-600 border-blue-100': member.status === 'DEEP WORK',
+                                        'bg-orange-50 text-orange-600 border-orange-100': member.status === 'AT CAPACITY',
+                                        'bg-gray-100 text-gray-500 border-gray-200': member.status === 'ON HOLD'
+                                    }" class="px-3 py-1 rounded-full text-[9px] font-black uppercase border"
+                                        x-text="member.status"></span>
+                                </td>
+                                <td class="px-8 py-2 text-center">
+                                    <div class="flex justify-center gap-1">
+                                        <button
+                                            class="p-1.5 text-gray-400 hover:text-[#0D3BBD] rounded-lg hover:bg-blue-50 transition-colors"><i
+                                                data-lucide="eye" class="w-4 h-4"></i></button>
+                                        <button
+                                            class="p-1.5 text-gray-400 hover:text-gray-900 rounded-lg hover:bg-gray-100 transition-colors"><i
+                                                data-lucide="pencil" class="w-4 h-4"></i></button>
+                                        <button
+                                            class="p-1.5 text-gray-400 hover:text-red-500 rounded-lg hover:bg-red-50 transition-colors"><i
+                                                data-lucide="trash-2" class="w-4 h-4"></i></button>
+                                    </div>
+                                </td>
+                            </tr>
+                        </template>
+                        <template x-for="i in (itemsPerPage - paginatedTeam.length)" :key="'empty-'+i">
+                            <tr class="h-[84px] border-b border-gray-50/20">
+                                <td colspan="6"></td>
+                            </tr>
+                        </template>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="px-8 py-5 flex justify-between items-center bg-gray-50/20">
+                <p class="text-[10px] text-gray-400 font-bold uppercase tracking-widest"
+                    x-text="`Showing ${paginatedTeam.length} of ${filteredTeam.length} records`"></p>
+                <div class="flex gap-2">
+                    <button @click="currentPage > 1 ? currentPage-- : null"
+                        class="w-8 h-8 rounded-xl border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-white disabled:opacity-30"
+                        :disabled="currentPage === 1"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                    <template x-for="page in totalPages" :key="page">
+                        <button @click="currentPage = page"
+                            :class="currentPage === page ? 'bg-[#0D3BBD] text-white shadow-lg shadow-blue-100' : 'text-gray-500 border border-gray-100 hover:bg-white'"
+                            class="w-8 h-8 rounded-xl font-black text-[10px] transition-all" x-text="page"></button>
+                    </template>
+                    <button @click="currentPage < totalPages ? currentPage++ : null"
+                        class="w-8 h-8 rounded-xl border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-white disabled:opacity-30"
+                        :disabled="currentPage === totalPages"><i data-lucide="chevron-right"
+                            class="w-4 h-4"></i></button>
+                </div>
+            </div>
+        </div>
+
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+            <div class="lg:col-span-2 bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm">
+                <div class="flex justify-between items-center mb-10">
+                    <h3 class="font-black text-lg text-gray-900 uppercase tracking-tight">Load Distribution</h3>
+                    <span class="text-xs text-blue-600 font-bold">View Full Report</span>
+                </div>
+                <div class="flex items-end justify-between h-32 px-4 gap-4">
+                    <div class="flex-1 bg-blue-50 rounded-t-xl h-[45%]"></div>
+                    <div class="flex-1 bg-[#0D3BBD] rounded-t-xl h-[85%]"></div>
+                    <div class="flex-1 bg-blue-50 rounded-t-xl h-[60%]"></div>
+                    <div class="flex-1 bg-[#0D3BBD] rounded-t-xl h-[95%]"></div>
+                    <div class="flex-1 bg-blue-50 rounded-t-xl h-[40%]"></div>
+                    <div class="flex-1 bg-[#0D3BBD] rounded-t-xl h-[70%]"></div>
+                </div>
+                <div
+                    class="flex justify-between mt-4 text-[10px] font-black text-gray-400 uppercase tracking-widest px-2">
+                    <span>SJ</span><span>MC</span><span>ER</span><span>DW</span><span>KL</span><span>JB</span>
+                </div>
+            </div>
+
+            <div class="bg-[#0D3BBD] p-8 rounded-[2rem] text-white flex flex-col justify-between">
+                <div>
+                    <h3 class="text-xl font-black mb-8 uppercase tracking-tighter italic">Upcoming Milestones</h3>
+                    <div class="space-y-6">
+                        <div class="flex gap-4 items-center bg-white/10 p-3 rounded-2xl">
+                            <div class="text-center min-w-[45px] border-r border-white/20 pr-3">
+                                <p class="text-[9px] font-bold opacity-60 uppercase tracking-widest">Oct</p>
+                                <p class="text-xl font-black">14</p>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold">Sarah Jenkins</p>
+                                <p class="text-[10px] opacity-60">3-Year Anniversary</p>
+                            </div>
+                        </div>
+                        <div class="flex gap-4 items-center bg-white/10 p-3 rounded-2xl">
+                            <div class="text-center min-w-[45px] border-r border-white/20 pr-3">
+                                <p class="text-[9px] font-bold opacity-60 uppercase tracking-widest">Oct</p>
+                                <p class="text-xl font-black">21</p>
+                            </div>
+                            <div>
+                                <p class="text-xs font-bold">Team Retreat</p>
+                                <p class="text-[10px] opacity-60">Fluid Design Workshop</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button
+                    class="w-full mt-8 bg-white text-[#0D3BBD] py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-50 transition-all shadow-xl shadow-black/10">View
+                    Calendar</button>
+            </div>
+        </section>
+    </main>
+</div>
+
+<script>
+    if (window.lucide) {
+        lucide.createIcons();
+    }
+</script>
