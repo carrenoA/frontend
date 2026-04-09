@@ -42,14 +42,34 @@
     </nav>
 
     <div class="p-4 border-t border-gray-50">
-        <div class="flex items-center gap-3 p-2 rounded-xl bg-gray-50 border border-gray-100">
-            <div
-                class="w-10 h-10 rounded-full bg-[#0D3BBD] text-white flex items-center justify-center font-black text-sm shadow-sm">
-                AD
-            </div>
-            <div>
-                <p class="text-xs font-black text-gray-900">Admin</p>
-                <p class="text-[10px] text-gray-400 font-bold uppercase">Super User</p>
+        <div class="relative" x-data="{ userMenuOpen: false }" @click.away="userMenuOpen = false">
+            <button @click="userMenuOpen = !userMenuOpen"
+                class="w-full flex items-center gap-3 p-2 rounded-xl bg-gray-50 border border-gray-100 hover:bg-gray-100 transition-colors cursor-pointer text-left focus:outline-none">
+                <div
+                    class="w-10 h-10 rounded-full bg-[#0D3BBD] text-white flex items-center justify-center font-black text-sm shadow-sm shrink-0">
+                    AD
+                </div>
+                <div class="flex-1">
+                    <p class="text-xs font-black text-gray-900">Admin</p>
+                    <p class="text-[10px] text-gray-400 font-bold uppercase">Super User</p>
+                </div>
+                <i data-lucide="chevron-up" class="w-4 h-4 text-gray-400 transition-transform duration-200"
+                    :class="{ 'rotate-180': userMenuOpen }"></i>
+            </button>
+
+            <!-- Dropdown Menu -->
+            <div x-cloak x-show="userMenuOpen" x-transition:enter="transition ease-out duration-100"
+                x-transition:enter-start="transform opacity-0 scale-95"
+                x-transition:enter-end="transform opacity-100 scale-100"
+                x-transition:leave="transition ease-in duration-75"
+                x-transition:leave-start="transform opacity-100 scale-100"
+                x-transition:leave-end="transform opacity-0 scale-95"
+                class="absolute bottom-full left-0 w-full mb-2 bg-white border border-gray-100 rounded-xl shadow-lg overflow-hidden z-50">
+                <a href="/index.html"
+                    class="flex items-center gap-2 px-4 py-3 text-sm font-bold text-red-600 hover:bg-red-50 transition-colors w-full text-left">
+                    <i data-lucide="log-out" class="w-4 h-4"></i>
+                    Logout
+                </a>
             </div>
         </div>
     </div>
