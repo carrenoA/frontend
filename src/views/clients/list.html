@@ -1,13 +1,14 @@
 <div class="flex min-h-screen bg-[#F9FAFB] animate-in fade-in duration-500">
     <div hx-get="/src/partials/sidebar.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></div>
 
-    <main class="flex-1 p-8 overflow-y-auto">
+    <main class="flex-1 p-8 overflow-y-auto" x-data="{ showModal: false, modalTitle: 'Create New Client' }">
         <header class="flex justify-between items-center mb-10">
             <div>
                 <h1 class="text-3xl font-bold text-gray-900">Clients</h1>
             </div>
             <div class="flex gap-4 items-center">
-                <button class="btn-primary !w-auto py-2 px-6 shadow-md shadow-blue-100 flex items-center gap-2">
+                <button @click="showModal = true"
+                    class="btn-primary !w-auto py-2 px-6 shadow-md shadow-blue-100 flex items-center gap-2">
                     <i data-lucide="plus" class="w-4 h-4"></i> Create New Client
                 </button>
             </div>
@@ -37,50 +38,49 @@
             </div>
         </section>
 
-        <!-- <h2 class="text-xl font-bold text-gray-900 mb-6">Key Client Insights</h2>
-        <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
-            <div class="lg:col-span-2 bg-[#0D3BBD] rounded-[2rem] p-8 text-white relative overflow-hidden group">
-                <div class="relative z-10">
-                    <span class="text-[10px] font-black uppercase tracking-widest opacity-60">VIP Client</span>
-                    <h3 class="text-3xl font-bold mt-4 mb-2">Vanguard Systems</h3>
-                    <p class="text-blue-100 text-sm max-w-md leading-relaxed mb-8">Major infrastructure project
-                        approaching Q4 milestone. Resources prioritized for 99.9% uptime delivery.</p>
-                    <button
-                        class="bg-white text-[#0D3BBD] px-8 py-3 rounded-xl font-bold text-sm hover:scale-105 transition-transform shadow-xl">Review
-                        Pipeline</button>
-                </div>
-                <div
-                    class="absolute -right-20 -bottom-20 w-64 h-64 bg-white/10 rounded-full blur-3xl group-hover:bg-white/20 transition-colors">
-                </div>
-            </div>
+        <!-- modal -->
 
-            <div class="space-y-6">
-                <div class="card p-6 border-l-4 border-orange-500 flex gap-4">
-                    <div class="p-3 bg-orange-50 text-orange-500 rounded-xl h-fit"><i data-lucide="alert-triangle"
-                            class="w-5 h-5"></i></div>
-                    <div>
-                        <h4 class="font-bold text-gray-900">Expiring Contracts</h4>
-                        <p class="text-xs text-gray-400 font-medium mb-4">3 Renewals due this week</p>
-                    </div>
+        <div x-show="showModal"
+            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm"
+            x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-cloak>
+
+            <div @click.away="showModal = false"
+                class="bg-white w-full max-w-md rounded-[2.5rem] shadow-2xl relative p-10 animate-in zoom-in duration-300">
+
+                <button @click="showModal = false"
+                    class="absolute top-8 right-8 text-gray-400 hover:text-gray-900 transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+
+                <div class="mb-8">
+                    <span
+                        class="inline-block px-3 py-1 bg-blue-50 text-[#0D3BBD] text-[10px] font-black uppercase tracking-widest rounded-lg mb-4">New
+                        Entry</span>
+                    <h2 class="text-3xl font-black text-gray-900 tracking-tight" x-text="modalTitle"></h2>
                 </div>
-                <div class="card p-6 border-l-4 border-blue-500 flex gap-4">
-                    <div class="p-3 bg-blue-50 text-[#0D3BBD] rounded-xl h-fit"><i data-lucide="message-circle"
-                            class="w-5 h-5"></i></div>
-                    <div>
-                        <h4 class="font-bold text-gray-900">Unread Feedback</h4>
-                        <div class="flex -space-x-1.5 mt-2">
-                            <div
-                                class="w-6 h-6 rounded-full bg-indigo-100 border border-white text-[8px] flex items-center justify-center font-bold">
-                                AS</div>
-                            <div
-                                class="w-6 h-6 rounded-full bg-blue-100 border border-white text-[8px] flex items-center justify-center font-bold">
-                                TM</div>
-                        </div>
+
+                <form class="space-y-6">
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Name</label>
+                        <input type="text" placeholder="Fullname"
+                            class="w-full px-6 py-4 bg-gray-50 border-none rounded-[1.2rem] text-sm focus:ring-2 focus:ring-blue-100 outline-none font-semibold">
                     </div>
-                </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Email</label>
+                        <input type="email" placeholder="email@example.com"
+                            class="w-full px-6 py-4 bg-gray-50 border-none rounded-[1.2rem] text-sm focus:ring-2 focus:ring-blue-100 outline-none font-semibold">
+                    </div>
+                    <button type="button"
+                        class="w-full bg-[#0D3BBD] text-white py-5 rounded-[1.5rem] font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-blue-200 mt-4 hover:scale-[1.02] transition-transform">
+                        Initialize Client
+                    </button>
+                </form>
             </div>
-        </div> -->
+        </div>
+
+
     </main>
 </div>
-
 <script>lucide.createIcons();</script>

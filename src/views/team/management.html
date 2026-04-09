@@ -2,6 +2,8 @@
     <div hx-get="/src/partials/sidebar.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></div>
 
     <main class="flex-1 p-8" x-data="{
+        showModal: false,
+        modalTitle: 'Invite Team Member',
         search: '',
         currentPage: 1,
         itemsPerPage: 6,
@@ -46,12 +48,6 @@
 
         <header class="flex justify-between items-center mb-10">
             <div>
-                <!-- <nav class="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">
-                    <button hx-get="/src/views/dashboard.html" hx-target="#app-container"
-                        class="hover:text-[#0D3BBD]">Dashboard</button>
-                    <i data-lucide="chevron-right" class="w-3 h-3"></i>
-                    <span class="text-[#0D3BBD]">Team Management</span>
-                </nav> -->
                 <h1 class="text-3xl font-black text-gray-900 tracking-tight">Team Management</h1>
             </div>
         </header>
@@ -72,7 +68,7 @@
                 <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-1">Avg. Availability</p>
                 <h3 class="text-4xl font-black text-gray-900 leading-none">84%</h3>
             </div>
-            <div
+            <div @click="showModal = true"
                 class="border-2 border-dashed border-gray-200 rounded-[2rem] flex items-center justify-center p-6 cursor-pointer hover:border-[#0D3BBD] hover:bg-blue-50/30 transition-all group">
                 <div class="text-center">
                     <i data-lucide="user-plus"
@@ -159,21 +155,16 @@
                                 <td class="px-8 py-2 text-center">
                                     <div class="flex justify-center gap-1">
                                         <button
-                                            class="p-1.5 text-gray-400 hover:text-[#0D3BBD] rounded-lg hover:bg-blue-50 transition-colors"><i
+                                            class="p-1.5 text-gray-400 hover:text-[#0D3BBD] rounded-lg hover:bg-blue-50"><i
                                                 data-lucide="eye" class="w-4 h-4"></i></button>
                                         <button
-                                            class="p-1.5 text-gray-400 hover:text-gray-900 rounded-lg hover:bg-gray-100 transition-colors"><i
+                                            class="p-1.5 text-gray-400 hover:text-gray-900 rounded-lg hover:bg-gray-100"><i
                                                 data-lucide="pencil" class="w-4 h-4"></i></button>
                                         <button
-                                            class="p-1.5 text-gray-400 hover:text-red-500 rounded-lg hover:bg-red-50 transition-colors"><i
+                                            class="p-1.5 text-gray-400 hover:text-red-500 rounded-lg hover:bg-red-50"><i
                                                 data-lucide="trash-2" class="w-4 h-4"></i></button>
                                     </div>
                                 </td>
-                            </tr>
-                        </template>
-                        <template x-for="i in (itemsPerPage - paginatedTeam.length)" :key="'empty-'+i">
-                            <tr class="h-[84px] border-b border-gray-50/20">
-                                <td colspan="6"></td>
                             </tr>
                         </template>
                     </tbody>
@@ -200,7 +191,7 @@
             </div>
         </div>
 
-        <!-- <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <section class="grid grid-cols-1 lg:grid-cols-3 gap-6">
             <div class="lg:col-span-2 bg-white p-8 rounded-[2rem] border border-gray-100 shadow-sm">
                 <div class="flex justify-between items-center mb-10">
                     <h3 class="font-black text-lg text-gray-900 uppercase tracking-tight">Load Distribution</h3>
@@ -247,15 +238,52 @@
                     </div>
                 </div>
                 <button
-                    class="w-full mt-8 bg-white text-[#0D3BBD] py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-50 transition-all shadow-xl shadow-black/10">View
+                    class="w-full mt-8 bg-white text-[#0D3BBD] py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-50 transition-all shadow-xl">View
                     Calendar</button>
             </div>
-        </section> -->
+        </section>
+
+        <!-- Modal Invite Team Member -->
+
+        <div x-show="showModal"
+            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm"
+            x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-cloak>
+
+            <div @click.away="showModal = false"
+                class="bg-white w-full max-w-md rounded-[2.5rem] shadow-2xl relative p-10 animate-in zoom-in duration-300">
+
+                <button @click="showModal = false"
+                    class="absolute top-8 right-8 text-gray-400 hover:text-gray-900 transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+
+                <div class="mb-8">
+                    <span
+                        class="inline-block px-3 py-1 bg-blue-50 text-[#0D3BBD] text-[10px] font-black uppercase tracking-widest rounded-lg mb-4">New
+                        Entry</span>
+                    <h2 class="text-3xl font-black text-gray-900 tracking-tight" x-text="modalTitle"></h2>
+                </div>
+
+                <form class="space-y-6">
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Name</label>
+                        <input type="text" placeholder="Fullname"
+                            class="w-full px-6 py-4 bg-gray-50 border-none rounded-[1.2rem] text-sm focus:ring-2 focus:ring-blue-100 outline-none font-semibold">
+                    </div>
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-400 uppercase tracking-widest ml-1">Email</label>
+                        <input type="email" placeholder="email@example.com"
+                            class="w-full px-6 py-4 bg-gray-50 border-none rounded-[1.2rem] text-sm focus:ring-2 focus:ring-blue-100 outline-none font-semibold">
+                    </div>
+                    <button type="button"
+                        class="w-full bg-[#0D3BBD] text-white py-5 rounded-[1.5rem] font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-blue-200 mt-4 hover:scale-[1.02] transition-transform">
+                        Initialize Client
+                    </button>
+                </form>
+            </div>
+        </div>
+
     </main>
 </div>
-
-<script>
-    if (window.lucide) {
-        lucide.createIcons();
-    }
-</script>
