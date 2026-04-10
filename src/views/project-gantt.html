@@ -216,7 +216,7 @@
                         </div>
                     </div>
                     <div class="pt-4">
-                        <button type="button" @click="showActivityModal = false"
+                        <button type="button" @click="$dispatch('notify', { message: 'Activity added successfully!', type: 'success' }); showActivityModal = false"
                             class="w-full bg-indigo-600 text-white py-3 rounded-xl font-bold text-sm shadow-md hover:bg-indigo-700 transition-colors">
                             Commit Activity
                         </button>
@@ -265,7 +265,7 @@
                         </div>
                     </div>
                     <div class="pt-4">
-                        <button type="button" @click="showTaskModal = false"
+                        <button type="button" @click="$dispatch('notify', { message: 'Task appended successfully!', type: 'success' }); showTaskModal = false"
                             class="w-full bg-[#0D3BBD] text-white py-3 rounded-xl font-bold text-sm shadow-md hover:bg-blue-800 transition-colors">
                             Commit Task
                         </button>

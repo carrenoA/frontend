@@ -232,7 +232,7 @@
                     </div>
 
                     <div class="pt-4 flex items-center justify-end">
-                        <button type="button"
+                        <button type="button" @click="$dispatch('notify', { message: 'Project initialized successfully!', type: 'success' }); showModal = false"
                             class="bg-[#0D3BBD] text-white px-6 py-3 rounded-xl font-bold text-sm shadow-md hover:bg-blue-800 transition-colors">
                             Initialize Project
                         </button>

@@ -72,7 +72,7 @@
                         <input type="email" placeholder="email@example.com"
                             class="w-full px-6 py-4 bg-gray-50 border-none rounded-[1.2rem] text-sm focus:ring-2 focus:ring-blue-100 outline-none font-semibold">
                     </div>
-                    <button type="button"
+                    <button type="button" @click="$dispatch('notify', { message: 'Client initialized successfully!', type: 'success' }); showModal = false"
                         class="w-full bg-[#0D3BBD] text-white py-5 rounded-[1.5rem] font-black text-xs uppercase tracking-[0.2em] shadow-xl shadow-blue-200 mt-4 hover:scale-[1.02] transition-transform">
                         Initialize Client
                     </button>
