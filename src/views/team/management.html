@@ -3,6 +3,7 @@
 
     <main class="flex-1 p-8" x-data="{
         showModal: false,
+        showCalendarModal: false,
         modalTitle: 'Invite Team Member',
         search: '',
         currentPage: 1,
@@ -237,7 +238,7 @@
                         </div>
                     </div>
                 </div>
-                <button
+                <button @click="showCalendarModal = true"
                     class="w-full mt-8 bg-white text-[#0D3BBD] py-4 rounded-2xl font-black text-xs uppercase tracking-widest hover:bg-blue-50 transition-all shadow-xl">View
                     Calendar</button>
             </div>
@@ -285,5 +286,139 @@
             </div>
         </div>
 
+        <!-- Modal Calendar -->
+        <div x-show="showCalendarModal"
+            class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm"
+            x-transition:enter="transition ease-out duration-300" x-transition:enter-start="opacity-0"
+            x-transition:enter-end="opacity-100" x-transition:leave="transition ease-in duration-200"
+            x-transition:leave-start="opacity-100" x-transition:leave-end="opacity-0" x-cloak>
+
+            <div @click.away="showCalendarModal = false"
+                class="bg-white w-full max-w-[500px] rounded-[2.5rem] shadow-2xl relative p-10 animate-in zoom-in duration-300">
+
+                <button @click="showCalendarModal = false"
+                    class="absolute top-8 right-8 text-gray-400 hover:text-gray-900 transition-colors">
+                    <i data-lucide="x" class="w-6 h-6"></i>
+                </button>
+
+                <div class="mb-8 flex justify-between items-end">
+                    <div>
+                        <span class="inline-block px-3 py-1 bg-blue-50 text-[#0D3BBD] text-[10px] font-black uppercase tracking-widest rounded-lg mb-4">Milestones</span>
+                        <h2 class="text-3xl font-black text-gray-900 tracking-tight">October 2026</h2>
+                    </div>
+                    <div class="flex gap-2">
+                        <button type="button" class="w-8 h-8 rounded-xl border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-gray-50 transition-colors"><i data-lucide="chevron-left" class="w-4 h-4"></i></button>
+                        <button type="button" class="w-8 h-8 rounded-xl border border-gray-200 flex items-center justify-center text-gray-400 hover:bg-gray-50 transition-colors"><i data-lucide="chevron-right" class="w-4 h-4"></i></button>
+                    </div>
+                </div>
+
+                <div class="grid grid-cols-7 gap-2 text-center mb-2">
+                    <div class="text-[10px] font-black text-gray-400 uppercase tracking-widest pb-2">Sun</div>
+                    <div class="text-[10px] font-black text-gray-400 uppercase tracking-widest pb-2">Mon</div>
+                    <div class="text-[10px] font-black text-gray-400 uppercase tracking-widest pb-2">Tue</div>
+                    <div class="text-[10px] font-black text-gray-400 uppercase tracking-widest pb-2">Wed</div>
+                    <div class="text-[10px] font-black text-gray-400 uppercase tracking-widest pb-2">Thu</div>
+                    <div class="text-[10px] font-black text-gray-400 uppercase tracking-widest pb-2">Fri</div>
+                    <div class="text-[10px] font-black text-gray-400 uppercase tracking-widest pb-2">Sat</div>
+                </div>
+
+                <div class="grid grid-cols-7 gap-2">
+                    <!-- Blank starting days -->
+                    <div></div><div></div><div></div><div></div>
+
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer">1</div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer">2</div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer">3</div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer relative group pointer-events-auto">
+                        4
+                    </div>
+                    <div class="aspect-square flex flex-col items-center justify-center text-sm font-black text-[#0D3BBD] bg-blue-50 border border-blue-100 rounded-xl cursor-pointer shadow-sm relative group">
+                        5
+                        <div class="w-1.5 h-1.5 rounded-full bg-[#0D3BBD] mt-0.5"></div>
+                    </div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer">6</div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer">7</div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer">8</div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer">9</div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer relative">
+                        10
+                        <div class="absolute bottom-1.5 w-1.5 h-1.5 rounded-full bg-orange-500"></div>
+                    </div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer">11</div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer">12</div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer">13</div>
+                    
+                    <!-- Milestone 14 (Sarah's Anniversary) -->
+                    <div class="aspect-square flex flex-col items-center justify-center text-sm font-black text-white bg-[#0D3BBD] rounded-xl shadow-lg cursor-pointer">
+                        14
+                        <div class="w-1.5 h-1.5 rounded-full bg-blue-300 mt-0.5"></div>
+                    </div>
+                    
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer">15</div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer relative">
+                        16
+                    </div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer">17</div>
+                    <div class="aspect-square flex flex-col items-center justify-center text-sm font-black text-gray-900 bg-gray-100 border border-gray-200 rounded-xl cursor-pointer shadow-sm relative group">
+                        18
+                        <div class="w-1.5 h-1.5 rounded-full bg-gray-500 mt-0.5"></div>
+                    </div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer">19</div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer">20</div>
+                    
+                    <!-- Milestone 21 (Team Retreat) -->
+                    <div class="aspect-square flex flex-col items-center justify-center text-sm font-black text-[#0D3BBD] bg-blue-50 border border-blue-100 rounded-xl cursor-pointer shadow-sm">
+                        21
+                        <div class="w-1.5 h-1.5 rounded-full bg-[#0D3BBD] mt-0.5"></div>
+                    </div>
+
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer">22</div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer">23</div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer">24</div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer">25</div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer">26</div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer relative">
+                        27
+                        <div class="absolute bottom-1.5 w-1.5 h-1.5 rounded-full bg-purple-500"></div>
+                    </div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer">28</div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer font-black text-gray-900 border border-dashed border-gray-200">29</div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer">30</div>
+                    <div class="aspect-square flex items-center justify-center text-sm font-bold text-gray-500 rounded-xl hover:bg-gray-50 cursor-pointer">31</div>
+                </div>
+
+                <div class="mt-8 pt-6 border-t border-gray-50 space-y-3">
+                    <p class="text-[10px] font-bold text-gray-400 uppercase tracking-widest pl-1 mb-2">Milestone Legend</p>
+                    <div class="flex gap-3 items-center bg-gray-50 p-3 rounded-xl border border-transparent hover:border-gray-200 cursor-pointer transition-colors">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-[#0D3BBD] border border-blue-100 flex items-center justify-center font-black shadow-sm">5</div>
+                        <div>
+                            <p class="text-xs font-bold text-gray-900">Project Kickoff</p>
+                            <p class="text-[10px] font-medium text-gray-500">Metropolis Hub</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 items-center bg-gray-50 p-3 rounded-xl border border-transparent hover:border-gray-200 cursor-pointer transition-colors">
+                        <div class="w-10 h-10 rounded-xl bg-[#0D3BBD] text-white flex items-center justify-center font-black shadow-lg">14</div>
+                        <div>
+                            <p class="text-xs font-bold text-gray-900">Sarah Jenkins</p>
+                            <p class="text-[10px] font-medium text-gray-500">3-Year Anniversary</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 items-center bg-gray-50 p-3 rounded-xl border border-transparent hover:border-gray-200 cursor-pointer transition-colors">
+                        <div class="w-10 h-10 rounded-xl bg-gray-100 text-gray-900 border border-gray-200 flex items-center justify-center font-black shadow-sm">18</div>
+                        <div>
+                            <p class="text-xs font-bold text-gray-900">Quarterly Review</p>
+                            <p class="text-[10px] font-medium text-gray-500">All Leadership</p>
+                        </div>
+                    </div>
+                    <div class="flex gap-3 items-center bg-gray-50 p-3 rounded-xl border border-transparent hover:border-gray-200 cursor-pointer transition-colors">
+                        <div class="w-10 h-10 rounded-xl bg-blue-50 text-[#0D3BBD] border border-blue-100 flex items-center justify-center font-black shadow-sm">21</div>
+                        <div>
+                            <p class="text-xs font-bold text-gray-900">Team Retreat</p>
+                            <p class="text-[10px] font-medium text-gray-500">Fluid Design Workshop</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
     </main>
 </div>
