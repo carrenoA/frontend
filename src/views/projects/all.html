@@ -1,16 +1,17 @@
-<div class="flex min-h-screen bg-[#F9FAFB] animate-in fade-in duration-500" x-data="{ filter: 'all' }">
+<div class="flex min-h-screen bg-[#F9FAFB] animate-in fade-in duration-500"
+    x-data="{ filter: 'all', showProjectModal: false}">
     <div hx-get="/src/partials/sidebar.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></div>
 
     <main class="flex-1 p-8">
         <header class="flex justify-between items-center mb-10">
             <div>
-                <nav class="flex items-center gap-2 text-[10px] font-bold text-gray-400 uppercase tracking-widest mb-2">
-                    <button hx-get="/src/views/dashboard.html" hx-target="#app-container"
-                        class="hover:text-[#0D3BBD]">Dashboard</button>
-                    <i data-lucide="chevron-right" class="w-3 h-3"></i>
-                    <span class="text-[#0D3BBD]">All Projects</span>
-                </nav>
                 <h1 class="text-3xl font-black text-gray-900 tracking-tight">Project Portfolio</h1>
+            </div>
+            <div class="flex gap-3">
+                <button @click="showProjectModal = true"
+                    class="bg-[#0D3BBD] text-white px-6 py-3 rounded-[1.2rem] font-bold text-sm shadow-lg shadow-blue-200 hover:scale-105 transition-transform flex items-center gap-2">
+                    <i data-lucide="plus"></i> New Project
+                </button>
             </div>
         </header>
 
@@ -70,7 +71,164 @@
                     <div class="bg-green-500 h-full" style="width: 100%"></div>
                 </div>
             </div>
+        </div>
+        <!-- Create Project Modal -->
+        <div x-show="showProjectModal"
+            class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/20 backdrop-blur-sm"
+            x-transition.opacity x-cloak>
+            <div @click.away="showProjectModal = false"
+                class="bg-white w-full max-w-[500px] rounded-[1.5rem] shadow-2xl relative p-8 animate-in zoom-in duration-300">
 
+                <button @click="showProjectModal = false"
+                    class="absolute top-6 right-6 text-gray-400 hover:text-gray-900 transition-colors">
+                    <i data-lucide="x" class="w-5 h-5"></i>
+                </button>
+
+                <div class="mb-6">
+                    <span
+                        class="inline-block px-3 py-1 bg-blue-50 text-[#0D3BBD] text-[10px] font-bold uppercase rounded-full mb-3">NEW
+                        WORKSPACE</span>
+                    <h2 class="text-2xl font-bold text-gray-900">Create Project</h2>
+                    <p class="text-sm text-gray-500 mt-1">Establish a new architectural framework for your team's
+                        objectives.</p>
+                </div>
+
+                <form class="space-y-4">
+                    <div class="space-y-1.5">
+                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block ml-1">Project
+                            Name</label>
+                        <input type="text" placeholder="Project Name"
+                            class="w-full px-4 py-3 bg-gray-100 border-none rounded-xl text-sm focus:ring-2 focus:ring-blue-100 outline-none text-gray-700 font-medium">
+                    </div>
+
+                    <div class="grid grid-cols-2 gap-4">
+                        <div class="space-y-1.5">
+                            <label
+                                class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block ml-1">Start
+                                Date</label>
+                            <div class="relative group">
+                                <i data-lucide="calendar"
+                                    class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 z-10 pointer-events-none group-hover:text-blue-500 transition-colors"></i>
+                                <input type="date"
+                                    class="w-full pl-9 pr-4 py-3 bg-gray-100 border-none rounded-xl text-sm focus:ring-2 focus:ring-blue-100 outline-none text-gray-700 font-medium cursor-pointer [&::-webkit-calendar-picker-indicator]:bg-transparent [&::-webkit-calendar-picker-indicator]:w-full [&::-webkit-calendar-picker-indicator]:h-full [&::-webkit-calendar-picker-indicator]:absolute [&::-webkit-calendar-picker-indicator]:left-0 [&::-webkit-calendar-picker-indicator]:cursor-pointer [&::-webkit-calendar-picker-indicator]:opacity-0">
+                            </div>
+                        </div>
+                        <div class="space-y-1.5" x-data="{ showLeads: false, selectedLead: '' }">
+                            <label
+                                class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block ml-1">Project
+                                Lead</label>
+                            <div class="relative" @click.away="showLeads = false">
+                                <i data-lucide="user"
+                                    class="w-4 h-4 text-gray-400 absolute left-3 top-1/2 -translate-y-1/2 z-10 pointer-events-none"></i>
+                                <input type="text" placeholder="Select Lead" x-model="selectedLead"
+                                    @click="showLeads = !showLeads" readonly
+                                    class="w-full pl-9 pr-8 py-3 bg-gray-100 border-none rounded-xl text-sm focus:ring-2 focus:ring-blue-100 outline-none text-gray-700 font-medium cursor-pointer">
+
+                                <i data-lucide="chevron-down"
+                                    class="w-4 h-4 text-gray-400 absolute right-3 top-1/2 -translate-y-1/2 pointer-events-none transition-transform"
+                                    :class="showLeads ? 'rotate-180' : ''"></i>
+
+                                <div x-show="showLeads" x-transition.opacity x-cloak
+                                    class="absolute left-0 top-full mt-2 w-full bg-white rounded-xl shadow-xl border border-gray-100 z-50 overflow-hidden text-sm">
+                                    <div
+                                        class="p-2 border-b border-gray-50 bg-gray-50/50 text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                                        Select Lead</div>
+                                    <ul class="max-h-48 overflow-y-auto p-1">
+                                        <li><button type="button"
+                                                @click="selectedLead = 'Sarah Jenkins'; showLeads = false"
+                                                class="w-full text-left px-3 py-2 hover:bg-blue-50 rounded-lg transition-colors text-gray-700 font-medium">Sarah
+                                                Jenkins</button></li>
+                                        <li><button type="button"
+                                                @click="selectedLead = 'Marcus Doe'; showLeads = false"
+                                                class="w-full text-left px-3 py-2 hover:bg-blue-50 rounded-lg transition-colors text-gray-700 font-medium">Marcus
+                                                Doe</button></li>
+                                        <li><button type="button"
+                                                @click="selectedLead = 'Elena Rodriguez'; showLeads = false"
+                                                class="w-full text-left px-3 py-2 hover:bg-blue-50 rounded-lg transition-colors text-gray-700 font-medium">Elena
+                                                Rodriguez</button></li>
+                                        <li><button type="button"
+                                                @click="selectedLead = 'James Chen'; showLeads = false"
+                                                class="w-full text-left px-3 py-2 hover:bg-blue-50 rounded-lg transition-colors text-gray-700 font-medium">James
+                                                Chen</button></li>
+                                        <li><button type="button"
+                                                @click="selectedLead = 'Michael Smith'; showLeads = false"
+                                                class="w-full text-left px-3 py-2 hover:bg-blue-50 rounded-lg transition-colors text-gray-700 font-medium">Michael
+                                                Smith</button></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="space-y-1.5">
+                        <label
+                            class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block ml-1">Description</label>
+                        <textarea placeholder="Define the core vision and scope..." rows="3"
+                            class="w-full px-4 py-3 bg-gray-100 border-none rounded-xl text-sm focus:ring-2 focus:ring-blue-100 outline-none text-gray-700 font-medium resize-none"></textarea>
+                    </div>
+
+                    <div class="space-y-2">
+                        <label class="text-[10px] font-bold text-gray-500 uppercase tracking-widest block ml-1">Team
+                            Assignment</label>
+                        <div class="flex items-center gap-1 ml-1" x-data="{ showUsers: false }">
+                            <img src="https://i.pravatar.cc/100?img=11" alt="Team member"
+                                class="w-8 h-8 rounded-full border-2 border-white shadow-sm ring-1 ring-gray-100">
+                            <img src="https://i.pravatar.cc/100?img=12" alt="Team member"
+                                class="w-8 h-8 rounded-full border-2 border-white shadow-sm ring-1 ring-gray-100 -ml-2">
+                            <img src="https://i.pravatar.cc/100?img=13" alt="Team member"
+                                class="w-8 h-8 rounded-full border-2 border-white shadow-sm ring-1 ring-gray-100 -ml-2">
+
+                            <div class="relative" @click.away="showUsers = false">
+                                <button type="button" @click="showUsers = !showUsers"
+                                    class="w-8 h-8 rounded-full border-2 border-white bg-gray-100 flex items-center justify-center text-gray-500 hover:bg-gray-200 shadow-sm ring-1 ring-gray-100 -ml-2 z-10 transition-colors relative">
+                                    <i data-lucide="plus" class="w-4 h-4"></i>
+                                </button>
+
+                                <div x-show="showUsers" x-transition.opacity x-cloak
+                                    class="absolute left-0 bottom-full mb-2 w-48 bg-white rounded-xl shadow-xl border border-gray-100 z-50 overflow-hidden text-sm">
+                                    <div
+                                        class="p-2 border-b border-gray-50 bg-gray-50/50 text-[10px] font-bold text-gray-400 uppercase tracking-wider">
+                                        Assign Users</div>
+                                    <ul class="max-h-48 overflow-y-auto p-1">
+                                        <li><button type="button"
+                                                class="w-full flex items-center gap-3 px-3 py-2 hover:bg-blue-50 rounded-lg transition-colors text-left text-gray-700 font-medium">
+                                                <img src="https://i.pravatar.cc/100?img=33"
+                                                    class="w-6 h-6 rounded-full"> <span>Sarah Jenkins</span>
+                                            </button></li>
+                                        <li><button type="button"
+                                                class="w-full flex items-center gap-3 px-3 py-2 hover:bg-blue-50 rounded-lg transition-colors text-left text-gray-700 font-medium">
+                                                <img src="https://i.pravatar.cc/100?img=47"
+                                                    class="w-6 h-6 rounded-full"> <span>Marcus Doe</span>
+                                            </button></li>
+                                        <li><button type="button"
+                                                class="w-full flex items-center gap-3 px-3 py-2 hover:bg-blue-50 rounded-lg transition-colors text-left text-gray-700 font-medium">
+                                                <img src="https://i.pravatar.cc/100?img=15"
+                                                    class="w-6 h-6 rounded-full"> <span>Elena Rodriguez</span>
+                                            </button></li>
+                                        <li><button type="button"
+                                                class="w-full flex items-center gap-3 px-3 py-2 hover:bg-blue-50 rounded-lg transition-colors text-left text-gray-700 font-medium">
+                                                <img src="https://i.pravatar.cc/100?img=59"
+                                                    class="w-6 h-6 rounded-full"> <span>James Chen</span>
+                                            </button></li>
+                                        <li><button type="button"
+                                                class="w-full flex items-center gap-3 px-3 py-2 hover:bg-blue-50 rounded-lg transition-colors text-left text-gray-700 font-medium">
+                                                <img src="https://i.pravatar.cc/100?img=61"
+                                                    class="w-6 h-6 rounded-full"> <span>Michael Smith</span>
+                                            </button></li>
+                                    </ul>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="pt-4 flex items-center justify-end">
+                        <button type="button"
+                            class="bg-[#0D3BBD] text-white px-6 py-3 rounded-xl font-bold text-sm shadow-md hover:bg-blue-800 transition-colors">
+                            Initialize Project
+                        </button>
+                    </div>
+                </form>
+            </div>
         </div>
     </main>
 </div>
