@@ -17,6 +17,7 @@
     <script src="/static/libs/frappe-gantt/frappe-gantt.umd.js" defer></script>
     <script src="/static/js/main.js" defer></script>
 
+    <script defer src="https://unpkg.com/@alpinejs/collapse@3.x.x/dist/cdn.min.js"></script>
     <script defer src="https://unpkg.com/alpinejs@3.x.x/dist/cdn.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
 
@@ -35,6 +36,9 @@
     <div id="global-spinner" class="htmx-indicator fixed inset-0 z-[9999] bg-white/60 backdrop-blur-sm flex items-center justify-center">
         <div class="animate-spin rounded-full h-16 w-16 border-4 border-gray-200 border-t-[#0D3BBD] shadow-xl"></div>
     </div>
+
+    <!-- Dummy target to prevent HTMX error when overriding indicator -->
+    <div id="no-indicator" class="hidden"></div>
 
     <div id="app-container" class="min-h-screen" x-init="
             const path = window.location.pathname;
