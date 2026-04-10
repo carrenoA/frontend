@@ -1,4 +1,4 @@
-<div class="flex min-h-screen bg-[#F9FAFB] animate-in fade-in duration-500" x-data="ganttLogic()" x-init="initGantt()">
+<div class="flex min-h-screen bg-[#F9FAFB] animate-in fade-in duration-500" hx-indicator="none" x-data="ganttLogic()" x-init="initGantt()">
 
     <div hx-get="/src/partials/sidebar.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></div>
 

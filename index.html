@@ -22,7 +22,19 @@
 
 </head>
 
-<body class="bg-[#F9FAFB]" x-data>
+<body class="bg-[#F9FAFB]" x-data hx-indicator="#global-spinner">
+
+    <!-- Global CSS for HTMX indicators -->
+    <style>
+        .htmx-indicator { opacity: 0; pointer-events: none; transition: opacity 200ms ease-in; }
+        .htmx-request .htmx-indicator { opacity: 1; pointer-events: auto; }
+        .htmx-request.htmx-indicator { opacity: 1; pointer-events: auto; }
+    </style>
+
+    <!-- Global Spinner -->
+    <div id="global-spinner" class="htmx-indicator fixed inset-0 z-[9999] bg-white/60 backdrop-blur-sm flex items-center justify-center">
+        <div class="animate-spin rounded-full h-16 w-16 border-4 border-gray-200 border-t-[#0D3BBD] shadow-xl"></div>
+    </div>
 
     <div id="app-container" class="min-h-screen" x-init="
             const path = window.location.pathname;
