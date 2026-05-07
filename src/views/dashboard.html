@@ -1,6 +1,6 @@
 <div class="flex min-h-screen w-full bg-[#F9FAFB] animate-in fade-in duration-500">
 
-    <div hx-get="/src/partials/sidebar.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></div>
+    <div hx-get="src/partials/sidebar.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></div>
 
     <main class="flex-1 p-8 overflow-y-auto">
         <header class="flex justify-between items-center mb-10">
@@ -51,7 +51,7 @@
                 <section>
                     <div class="flex justify-between items-center mb-6">
                         <h2 class="text-xl font-bold text-gray-900">Active Projects</h2>
-                        <button hx-get="/src/views/projects/all.html" hx-target="#app-container" hx-push-url="true"
+                        <button hx-get="src/views/projects/all.html" hx-target="#app-container" hx-push-url="true"
                             class="text-sm font-bold text-[#0D3BBD] hover:underline">View all</button>
                     </div>
                     <div class="grid grid-cols-1 md:grid-cols-2 gap-6">

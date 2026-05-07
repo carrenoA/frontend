@@ -1,6 +1,6 @@
 <div class="flex min-h-screen bg-[#F9FAFB] animate-in fade-in duration-500"
     x-data="{ filter: 'all', showProjectModal: false}">
-    <div hx-get="/src/partials/sidebar.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></div>
+    <div hx-get="src/partials/sidebar.html" hx-trigger="load" hx-target="this" hx-swap="outerHTML"></div>
 
     <main class="flex-1 p-8 relative">
         <style>
@@ -10,7 +10,7 @@
         </style>
         <div id="gantt-skeleton" class="htmx-indicator absolute inset-0 z-50 bg-[#F9FAFB] flex-col p-8 w-full">
             <div class="animate-pulse w-full max-w-full">
-                <div hx-get="/src/partials/skeletons/gantt-skeleton.html" hx-trigger="load"></div>
+                <div hx-get="src/partials/skeletons/gantt-skeleton.html" hx-trigger="load"></div>
             </div>
         </div>
         <header class="flex justify-between items-center mb-10">
@@ -41,7 +41,7 @@
 
             <div x-show="filter === 'all' || filter === 'progress'"
                 class="bg-white p-6 rounded-[2rem] border-t-4 border-blue-500 shadow-sm cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all group"
-                hx-get="/src/views/project-gantt.html" hx-target="#app-container" hx-indicator="#gantt-skeleton">
+                hx-get="src/views/project-gantt.html" hx-target="#app-container" hx-indicator="#gantt-skeleton">
                 <div class="flex justify-between items-start mb-4">
                     <div
                         class="p-2 bg-blue-50 text-[#0D3BBD] rounded-lg group-hover:bg-[#0D3BBD] group-hover:text-white transition-colors">
@@ -63,7 +63,7 @@
 
             <div x-show="filter === 'all' || filter === 'completed'"
                 class="bg-white p-6 rounded-[2rem] border-t-4 border-green-500 shadow-sm cursor-pointer hover:shadow-xl hover:-translate-y-1 transition-all group"
-                hx-get="/src/views/project-gantt.html" hx-target="#app-container" hx-indicator="#gantt-skeleton">
+                hx-get="src/views/project-gantt.html" hx-target="#app-container" hx-indicator="#gantt-skeleton">
                 <div class="flex justify-between items-start mb-4">
                     <div
                         class="p-2 bg-green-50 text-green-600 rounded-lg group-hover:bg-green-600 group-hover:text-white transition-colors">

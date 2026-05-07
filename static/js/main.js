@@ -17,7 +17,7 @@ document.addEventListener('alpine:init', () => {
 
             if (this.email === AUTH_CONFIG.user && this.password === AUTH_CONFIG.pass) {
                 // IMPORTANTE: pushUrl actualiza la barra de direcciones para que el F5 funcione
-                htmx.ajax('GET', '/src/views/dashboard.html', {
+                htmx.ajax('GET', 'src/views/dashboard.html', {
                     target: '#app-container',
                     pushUrl: true
                 });
